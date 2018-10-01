@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rlLogo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_200sdp"
+                android:layout_centerHorizontal="true"
+                android:background="@mipmap/half_round"
+                android:visibility="invisible">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/_180sdp"
+                    android:layout_height="@dimen/_180sdp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="@dimen/_140sdp"
+                        android:layout_height="@dimen/_140sdp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@mipmap/logo"/>
+
+                    <code.view.CustomTextView
+                        android:id="@+id/tvName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/app_name"
+                        android:layout_below="@+id/imageView"
+                        android:textSize="@dimen/_20sdp"
+                        android:textColor="@color/blackNew"
+                        app:customFont="centurygothic.otf"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlRegisterBottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rlLogo"
+                android:visibility="gone">
+
+                <code.view.CustomTextView
+                    android:id="@+id/tvWelcome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/register_yourself"
+                    android:textSize="@dimen/_16sdp"
+                    android:textColor="@color/blackNew"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:layout_marginTop="@dimen/_15sdp"/>
+
+                <code.view.CustomEditText
+                    android:id="@+id/etFullName"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/full_name"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:inputType="textCapWords"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:layout_below="@+id/tvWelcome"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"
+                    android:background="@drawable/rectangle_edit_box"/>
+
+                <code.view.CustomEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/email_id"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:inputType="textEmailAddress"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:layout_below="@+id/etFullName"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"
+                    android:background="@drawable/rectangle_edit_box"/>
+
+                <RelativeLayout
+                    android:id="@+id/rlGender"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_below="@+id/etEmail"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible">
+
+                </RelativeLayout>
+
+                <code.view.CustomEditText
+                    android:id="@+id/etAge"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/age"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:inputType="number"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:layout_below="@+id/rlGender"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"
+                    android:background="@drawable/rectangle_edit_box"/>
+
+                <RelativeLayout
+                    android:id="@+id/rlHeight"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_below="@+id/etAge"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible"
+                    android:background="@drawable/rectangle_edit_box">
+
+                    <code.view.CustomEditText
+                        android:id="@+id/etHeight"
+                        android:layout_width="@dimen/_250sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/height"
+                        android:textSize="@dimen/_13sdp"
+                        android:textColor="@color/blackNew"
+                        android:inputType="number"
+                        android:layout_centerHorizontal="true"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        app:customFont="OpenSans-Regular.ttf"
+                        android:singleLine="true"
+                        android:background="@null"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlWeight"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_below="@+id/rlHeight"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible"
+                    android:background="@drawable/rectangle_edit_box">
+
+                    <code.view.CustomEditText
+                        android:id="@+id/etWeight"
+                        android:layout_width="@dimen/_250sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/weight"
+                        android:textSize="@dimen/_13sdp"
+                        android:textColor="@color/blackNew"
+                        android:inputType="number"
+                        android:layout_centerHorizontal="true"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        app:customFont="OpenSans-Regular.ttf"
+                        android:singleLine="true"
+                        android:background="@null"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlFoodPre"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_below="@+id/rlWeight"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible"
+                    android:background="@drawable/rectangle_edit_box">
+
+                    <code.view.CustomEditText
+                        android:id="@+id/etFoodPre"
+                        android:layout_width="@dimen/_250sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/food_preferences"
+                        android:textSize="@dimen/_13sdp"
+                        android:textColor="@color/blackNew"
+                        android:layout_centerHorizontal="true"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        app:customFont="OpenSans-Regular.ttf"
+                        android:singleLine="true"
+                        android:background="@null"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlMedCon"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_below="@+id/rlFoodPre"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="visible"
+                    android:background="@drawable/rectangle_edit_box">
+
+                    <code.view.CustomEditText
+                        android:id="@+id/etMedCon"
+                        android:layout_width="@dimen/_250sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/medical_condition"
+                        android:textSize="@dimen/_13sdp"
+                        android:textColor="@color/blackNew"
+                        android:layout_centerHorizontal="true"
+                        android:paddingLeft="@dimen/_10sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        app:customFont="OpenSans-Regular.ttf"
+                        android:singleLine="true"
+                        android:background="@null"/>
+
+                </RelativeLayout>
+
+                <code.view.CustomTextView
+                    android:id="@+id/tvRegister"
+                    android:layout_width="@dimen/_180sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:gravity="center"
+                    android:text="@string/register"
+                    android:layout_below="@+id/rlMedCon"
+                    android:layout_centerHorizontal="true"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:visibility="visible"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/rectangle_blue_button"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

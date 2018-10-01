@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp">
+
+        <include
+            layout="@layout/inflate_header"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlHeader"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/rlFilterMain"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="@dimen/_115sdp"
+        android:background="@mipmap/filter_box"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/_31sdp"
+        android:layout_marginRight="@dimen/_2sdp"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/rlBreakfast"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_12sdp">
+
+            <ImageView
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:id="@+id/ivBreakfast"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_filter_option"
+                android:layout_marginLeft="@dimen/_10sdp"/>
+
+            <code.view.CustomTextView
+                android:id="@+id/tvBreakfast"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/breakfast"
+                android:textColor="@color/darkGrey"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/_13sdp"
+                android:paddingLeft="@dimen/_6sdp"
+                app:customFont="OpenSans-Regular.ttf"
+                android:layout_toRightOf="@+id/ivBreakfast"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlLunch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_below="@+id/rlBreakfast">
+
+            <ImageView
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:id="@+id/ivLunch"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_filter_option"
+                android:layout_marginLeft="@dimen/_10sdp"/>
+
+            <code.view.CustomTextView
+                android:id="@+id/tvLunch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/lunch"
+                android:textColor="@color/darkGrey"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/_13sdp"
+                android:paddingLeft="@dimen/_6sdp"
+                app:customFont="OpenSans-Regular.ttf"
+                android:layout_toRightOf="@+id/ivLunch"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlDinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_below="@+id/rlLunch">
+
+            <ImageView
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:id="@+id/ivDinner"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_filter_option"
+                android:layout_marginLeft="@dimen/_10sdp"/>
+
+            <code.view.CustomTextView
+                android:id="@+id/tvDinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dinner"
+                android:textColor="@color/darkGrey"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/_13sdp"
+                android:paddingLeft="@dimen/_6sdp"
+                app:customFont="OpenSans-Regular.ttf"
+                android:layout_toRightOf="@+id/ivDinner"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlOnlyLiquids"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_below="@+id/rlDinner">
+
+            <ImageView
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:id="@+id/ivOnlyLiquids"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_filter_option"
+                android:layout_marginLeft="@dimen/_10sdp"/>
+
+            <code.view.CustomTextView
+                android:id="@+id/tvOnlyLiquids"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/only_liquids"
+                android:textColor="@color/darkGrey"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/_13sdp"
+                android:paddingLeft="@dimen/_6sdp"
+                app:customFont="OpenSans-Regular.ttf"
+                android:layout_toRightOf="@+id/ivOnlyLiquids"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
