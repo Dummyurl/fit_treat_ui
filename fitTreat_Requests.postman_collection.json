@@ -17,7 +17,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": " {\r\n\t\"firstName\": \"Test\",\r\n\t\"lastName\":\"User\",\r\n\t\"email\": \"test@gmail.com\",\r\n\t\"password\":\"Asdf1234\",\r\n\t\"dateOfBirth\":\"1995/09/25\",\r\n\t\"weight\": 75,\r\n\t\"height\": 180,\r\n\t\"bmi\": 23,\r\n\t\"medicalCondition\": \"None\",\r\n\t\"targetWeight\": null,\r\n\t\"targetDate\": null,\r\n\t\"targetCalories\": null,\r\n\t\"userPhoto\": \"\"\r\n }"
+					"raw": "{\n\t\"firstName\":\"Balkrishna\",\n    \"lastName\":\"Meena\",\n    \"email\": \"testmanil@gmail.com\",\n    \"gender\":\"Male\",\n    \"password\":\"Asdf1234\",\n    \"dateOfBirth\":\"1994/09/25\",\n    \"age\": 24,\n    \"weight\": 75,\n    \"weightUnit\":\"kg\",\n    \"height\": 180,\n    \"heightUnit\":\"cm\",\n    \"foodPreference\":\"Vegan\",\n    \"timeZone\":\"IST\",\n    \"medicalCondition\":\"None\"\n}"
 				},
 				"url": {
 					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/auth/register",
