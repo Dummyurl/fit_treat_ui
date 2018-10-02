@@ -37,7 +37,6 @@
         <activity android:name="code.general.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -97,9 +96,22 @@
             android:name="code.dashboard.WriteUsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"  />
-        <activity android:name="code.dashboard.MyProfileActivity" />
-        <activity android:name="code.dashboard.TargetActivity" />
-        <activity android:name="code.dashboard.CalCalculatorActivity" />
+        <activity
+            android:name="code.dashboard.MyProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="code.dashboard.TargetActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="code.dashboard.CalCalculatorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="code.dashboard.InboxDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

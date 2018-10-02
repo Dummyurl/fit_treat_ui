@@ -15,7 +15,7 @@ public class AppConstants {
     public static final String from = "from";
     public static final String typeImage = "image";
     public static final String orderId = "orderId";
-    public static final ArrayList<HashMap<String, String>> imageList = new ArrayList();
+    public static final ArrayList<HashMap<String, String>> InboxList = new ArrayList();
     public static final ArrayList<HashMap<String, String>> searchList = new ArrayList();
     public static JSONObject jsonObject = new JSONObject();
 }

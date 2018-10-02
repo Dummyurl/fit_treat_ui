@@ -10,14 +10,24 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.StringRequestListener;
 import com.fittreat.android.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import code.common.RoundedImageView;
+import code.database.AppSettings;
+import code.utils.AppUrls;
 import code.utils.AppUtils;
 import code.view.BaseActivity;
 
@@ -30,7 +40,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
     RelativeLayout rlCalories,rlDietPlan,rlUtilities;
 
     //TextView
-    TextView tvCalculatedBMI,tvTargetWeight;
+    TextView tvCalculatedBMI,tvTargetWeight,tvInboxCount;
 
     //DrawerLayout
     static DrawerLayout mDrawerLayout;
@@ -65,6 +75,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         //TextView
         tvCalculatedBMI= findViewById(R.id.tvCalculatedBMI);
         tvTargetWeight= findViewById(R.id.tvTargetWeight);
+        tvInboxCount= findViewById(R.id.tvInboxCount);
 
         //RelativeLayout
         rlMenu= findViewById(R.id.rlMenu);
@@ -87,6 +98,8 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         //ScrollView
         scrollSideMenu = findViewById(R.id.scroll_side_menu);
 
+        tvCalculatedBMI.setText(AppSettings.getString(AppSettings.bmi));
+
         rlMenu.setOnClickListener(this);
         rlSync.setOnClickListener(this);
         rlProfile.setOnClickListener(this);
@@ -100,6 +113,22 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         rlDietPlan.setOnClickListener(this);
         rlUtilities.setOnClickListener(this);
         tvTargetWeight.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(AppSettings.getString(AppSettings.unreadCount).isEmpty()
+                ||AppSettings.getString(AppSettings.unreadCount).equals("0"))
+        {
+            tvInboxCount.setVisibility(View.GONE);
+        }
+        else
+        {
+            tvInboxCount.setVisibility(View.VISIBLE);
+            tvInboxCount.setText(AppSettings.getString(AppSettings.unreadCount));
+        }
     }
 
     @Override
@@ -270,4 +299,6 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
             //AppUtils.showToastSort(mActivity,getString(R.string.error));
         }
     }
+
+
 }

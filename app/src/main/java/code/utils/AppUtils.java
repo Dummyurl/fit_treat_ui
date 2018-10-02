@@ -3,6 +3,8 @@ package code.utils;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +25,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.Toolbar.LayoutParams;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -32,6 +35,8 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -718,13 +723,13 @@ public class AppUtils {
         if (diff < MINUTE_MILLIS) {
             return "just now";
         } else if (diff < 2 * MINUTE_MILLIS) {
-            return "a minute ago";
+            return "a min ago";
         } else if (diff < 50 * MINUTE_MILLIS) {
-            return diff / MINUTE_MILLIS + " minutes ago";
+            return diff / MINUTE_MILLIS + " mins ago";
         } else if (diff < 90 * MINUTE_MILLIS) {
-            return "an hour ago";
+            return "an hr ago";
         } else if (diff < 24 * HOUR_MILLIS) {
-            return diff / HOUR_MILLIS + " hours ago";
+            return diff / HOUR_MILLIS + " hrs ago";
         } else if (diff < 48 * HOUR_MILLIS) {
             return "yesterday";
         } else {
@@ -732,5 +737,80 @@ public class AppUtils {
         }
     }
 
+    public static String dateDialog(Context context, final EditText editText, int type) {
+        final String[] times = {""};
 
+        Calendar mcurrentDate= Calendar.getInstance();
+        int year=mcurrentDate.get(Calendar.YEAR);
+        int month=mcurrentDate.get(Calendar.MONTH);
+        int day=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+        if(!editText.getText().toString().isEmpty())
+        {
+            String[] parts = editText.getText().toString().split("/");
+            String part1 = parts[0];
+            String part2 = parts[1];
+            String part3 = parts[2];
+
+            day = Integer.parseInt(part3);
+            month = Integer.parseInt(part2);
+            year = Integer.parseInt(part1);
+        }
+
+        DatePickerDialog mDatePicker1 =new DatePickerDialog(context,  new DatePickerDialog.OnDateSetListener()
+        {
+            @Override
+            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday)
+            {
+                String dob = String.valueOf(new StringBuilder().append(selectedday).append("-").append(selectedmonth+1).append("-").append(selectedyear));
+                Log.d("dob",dob);
+                Log.d("dob",formatDate(selectedyear,selectedmonth,selectedday));
+                //AppSettings.putString(AppSettings.from,formatDate(selectedyear,selectedmonth,selectedday));
+                //tvDob.setText(dob);
+                editText.setText(formatDate(selectedyear,selectedmonth,selectedday));
+                try {
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        },year, month, day);
+        //mDatePicker1.setTitle("Select Date");
+        // TODO Hide Future Date Here
+
+        if(type==1)
+        {
+            mDatePicker1.getDatePicker().setMaxDate(System.currentTimeMillis());
+        }
+        else if(type==2)
+        {
+            mDatePicker1.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+        }
+        else
+        {
+            mDatePicker1.getDatePicker().setMaxDate(System.currentTimeMillis());
+            // Subtract 6 days from Calendar updated date
+            mcurrentDate.add(Calendar.DATE, -1);
+            mDatePicker1.getDatePicker().setMinDate(mcurrentDate.getTimeInMillis());
+        }
+
+        // TODO Hide Past Date Here
+        //set min todays date
+        //mDatePicker1.getDatePicker().setMinDate(System.currentTimeMillis());
+
+        mDatePicker1.show();
+
+        return times[0];
+    }
+
+    public static String formatDate(int year, int month, int day) {
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(0);
+        cal.set(year, month, day);
+        Date date = cal.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+
+        return sdf.format(date);
+    }
 }
