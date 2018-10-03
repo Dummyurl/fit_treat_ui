@@ -45,6 +45,18 @@
                     android:textColor="@color/white"
                     app:customFont="OpenSans-Regular.ttf"/>
 
+                <code.view.CustomTextView
+                    android:id="@+id/tvTarget"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/target_weight"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_below="@+id/tvH2"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/white"
+                    app:customFont="OpenSans-Regular.ttf"/>
 
             </RelativeLayout>
 

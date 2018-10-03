@@ -128,25 +128,25 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         },1600);
 
         WeightList.clear();
-        WeightList.add("kg");
-        WeightList.add("lb");
+        WeightList.add(getString(R.string.kg));
+        WeightList.add(getString(R.string.lb));
 
         HeightList.clear();
-        HeightList.add("cm");
-        HeightList.add("m");
-        HeightList.add("ft");
+        HeightList.add(getString(R.string.cm));
+        HeightList.add(getString(R.string.m));
+        HeightList.add(getString(R.string.ft));
 
         FoodList.clear();
-        FoodList.add("Food Preference");
-        FoodList.add("Vegan");
-        FoodList.add("Vegetarian");
-        FoodList.add("Non-Vegetarian");
+        FoodList.add(getString(R.string.food_preferences));
+        FoodList.add(getString(R.string.vegan));
+        FoodList.add(getString(R.string.vegetarian));
+        FoodList.add(getString(R.string.nonVegetarian));
 
         MedicalList.clear();
-        MedicalList.add("Medical Condition");
-        MedicalList.add("None");
-        MedicalList.add("Diabetes");
-        MedicalList.add("Thyroid");
+        MedicalList.add(getString(R.string.medical_condition));
+        MedicalList.add(getString(R.string.none));
+        MedicalList.add(getString(R.string.diabetes));
+        MedicalList.add(getString(R.string.thyroid));
 
         spinnerWeight.setAdapter(new adapterSpinner(mActivity, R.layout.spinner_adapter, WeightList));
         spinnerWeight.setSelection(0);
@@ -166,7 +166,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 if(isChecked)
                 {
-                    gender="Male";
+                    gender=getString(R.string.male);
                     rbMale.setChecked(true);
                     rbFemale.setChecked(false);
                 }
@@ -180,7 +180,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
                 if(isChecked)
                 {
-                    gender="Female";
+                    gender=getString(R.string.female);
                     rbMale.setChecked(false);
                     rbFemale.setChecked(true);
                 }
@@ -191,7 +191,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         ivDob.setOnClickListener(this);
         tvSubmit.setOnClickListener(this);
 
-
+        AppUtils.hideSoftKeyboard(mActivity);
     }
 
     private void upViewAnimation() {
@@ -406,6 +406,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 AppSettings.putString(AppSettings.weight,jsonObject.getString("weight"));
                 AppSettings.putString(AppSettings.height,jsonObject.getString("height"));
                 AppSettings.putString(AppSettings.medicalCondition,jsonObject.getString("medicalCondition"));
+                AppSettings.putString(AppSettings.foodPreference,jsonObject.getString("foodPreference"));
                 AppSettings.putString(AppSettings.userPhoto,"");
                 AppSettings.putString(AppSettings.targetWeight,"");
                 AppSettings.putString(AppSettings.targetDate,"");

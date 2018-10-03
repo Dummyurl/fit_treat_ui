@@ -14,6 +14,8 @@ public class AppUrls {
     public static final String logout = baseUrl+"Logout";
     public static final String inbox = baseUrl+"api/reloadMessages/"+AppSettings.getString(AppSettings.userId);
     public static final String readMessage = baseUrl+"api/readMessage/"+AppSettings.getString(AppSettings.userId)+"/";
+    public static final String targetWeight = baseUrl+"api/targetWeight";
+    public static final String updateProfile = baseUrl+"api/updateProfile";
 
 
 }

@@ -55,6 +55,33 @@
     <string name="errorDob">Select Date of Birth</string>
     <string name="errorHeight">Enter Height</string>
     <string name="errorWeight">Enter Weight</string>
+    <string name="errorAge">Enter Age</string>
     <string name="errorFood">Select Food Preference</string>
     <string name="errorMedical">Select Medical Condition</string>
+    <string name="time_period">Time Period</string>
+
+    <string name="kg">kg</string>
+    <string name="lb">lb</string>
+    <string name="days">days</string>
+    <string name="weeks">weeks</string>
+    <string name="cm">cm</string>
+    <string name="m">m</string>
+    <string name="ft">ft</string>
+    <string name="vegan">Vegan</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="nonVegetarian">Non-Vegetarian</string>
+    <string name="none">None</string>
+    <string name="diabetes">Diabetes</string>
+    <string name="thyroid">Thyroid</string>
+    <string name="dailyActivities">Daily Activities</string>
+    <string name="sedentart">Sedentart</string>
+    <string name="slightlyActive">Slightly Active</string>
+    <string name="moderatelyActive">Moderately Active</string>
+    <string name="veryActive">Very Active</string>
+    <string name="extraActive">Extra Active</string>
+    <string name="errorTarWeight">Enter Target Weight</string>
+    <string name="errorTarTime">Enter Target Time</string>
+    <string name="errorDailyActivity">Select Daily Activities</string>
+    <string name="age">Age</string>
+
 </resources>

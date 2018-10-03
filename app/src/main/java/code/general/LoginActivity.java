@@ -92,6 +92,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         etEmail.setText("test@gmail.com");
         etPassword.setText("Asdf1234");
+
+        AppUtils.hideSoftKeyboard(mActivity);
     }
 
     private void upViewAnimation() {
@@ -212,7 +214,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
            AppSettings.putString(AppSettings.weight,jsonObject.getString("weight"));
            AppSettings.putString(AppSettings.height,jsonObject.getString("height"));
            AppSettings.putString(AppSettings.bmi,jsonObject.getString("bmi"));
+            AppSettings.putString(AppSettings.userPhoto,jsonObject.getString("userPhoto"));
            AppSettings.putString(AppSettings.medicalCondition,jsonObject.getString("medicalCondition"));
+           AppSettings.putString(AppSettings.foodPreference,jsonObject.getString("foodPreference"));
            AppSettings.putString(AppSettings.targetWeight,jsonObject.getString("targetWeight"));
            AppSettings.putString(AppSettings.targetDate,jsonObject.getString("targetDate"));
            AppSettings.putString(AppSettings.targetCalories,jsonObject.getString("targetCalories"));

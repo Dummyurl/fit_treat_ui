@@ -16,6 +16,7 @@ public final class AppSettings extends OSettings {
     public static final String height       = "height";
     public static final String bmi       = "bmi";
     public static final String medicalCondition       = "medicalCondition";
+    public static final String foodPreference       = "foodPreference";
     public static final String targetWeight       = "targetWeight";
     public static final String targetDate       = "targetDate";
     public static final String targetCalories       = "targetCalories";

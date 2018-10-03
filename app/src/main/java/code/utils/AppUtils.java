@@ -3,7 +3,6 @@ package code.utils;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -45,6 +44,7 @@ import android.widget.Toast;
 import com.fittreat.android.R;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,6 +55,8 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import code.database.AppSettings;
 
 public class AppUtils {
     public static Toast mToast;
@@ -102,7 +104,7 @@ public class AppUtils {
         if (mToast != null && mToast.getView().isShown()) {
             mToast.cancel();
         }
-        mToast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        mToast = Toast.makeText(context, text, Toast.LENGTH_LONG);
         mToast.show();
     }
 
@@ -812,5 +814,209 @@ public class AppUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
         return sdf.format(date);
+    }
+
+    public static double covertWeight(Context context,double weight,String weigthType)
+    {
+        if(weigthType.equals(context.getString(R.string.lb)))
+        {
+            weight = weight * 0.453592;
+        }
+
+        Log.d("CaculationWeight", String.valueOf(weight));
+        return weight;
+    }
+
+
+    public static double covertWeeks(Context context,double weeks,String weeksType)
+    {
+        if(weeksType.equals(context.getString(R.string.days)))
+        {
+            weeks = weeks * 0.14286;
+
+            DecimalFormat f = new DecimalFormat("##.00");
+            weeks = Double.parseDouble(f.format(weeks));
+        }
+
+        Log.d("CaculationWeeks", String.valueOf(weeks));
+        return weeks;
+    }
+
+    public static String covertDays(Context context,double weeks,String weeksType)
+    {
+        if(weeksType.equals(context.getString(R.string.weeks)))
+        {
+            weeks = weeks * 7;
+
+            DecimalFormat f = new DecimalFormat("##.00");
+            weeks = Double.parseDouble(f.format(weeks));
+        }
+
+        //Log.d("CaculationWeeks", String.valueOf(weeks));
+
+        final DateFormat dateFormat1 = new SimpleDateFormat("yyyy/MM/dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date()); // Now use today date.
+        c.add(Calendar.DATE, (int) weeks); // Adding 5 days
+        return dateFormat1.format(c.getTime());
+
+    }
+
+    public static double covertHeightinCM(Context context,double height,String heightType)
+    {
+        if(heightType.equals(context.getString(R.string.ft)))
+        {
+            height = height * 30.48;
+        }
+
+        if(heightType.equals(context.getString(R.string.m)))
+        {
+            height = height * 100;
+        }
+
+        Log.d("CaculationHeight", String.valueOf(height));
+        return height;
+    }
+
+
+    public static double covertHeightinM(Context context,double height,String heightType)
+    {
+        if(heightType.equals(context.getString(R.string.ft)))
+        {
+            height = height * 0.3048;
+        }
+
+        if(heightType.equals(context.getString(R.string.cm)))
+        {
+            height = height * 0.01;
+        }
+
+        Log.d("CaculationHeightinMeter", String.valueOf(height));
+        return height;
+    }
+
+
+    public static double calculateBMR(Context context,
+                                      double height,
+                                      String heightType,
+                                      String gender,
+                                      int age,
+                                      double weight,
+                                      String weightType)
+    {
+        double  bmr = 0;
+        if(gender.equalsIgnoreCase(context.getString(R.string.male)))
+        {
+            //BMR = 66.47 + (13.75 * weight in kg) + (5.003 * height in cm) - (6.755 * age in years)
+            bmr = 66.47 + (13.75 * covertWeight(context,weight,weightType))
+                    + (5.003 * covertHeightinCM(context,height,heightType))
+                    - (6.755 * age);
+        }
+        else  if(gender.equalsIgnoreCase(context.getString(R.string.female))){
+            //BMR = 65.51 + (9.563 * weight in kg) + (1.85 * height in cm) - (4.676 * age in years)
+            bmr = 65.51 + (9.563 * covertWeight(context,weight,weightType))
+                    + (1.85 * covertHeightinCM(context,height,heightType))
+                    - (4.676 * age);
+        }
+
+        return bmr;
+    }
+
+
+    public static double calculateCalories(Context context,
+                                           double height,
+                                           String heightType,
+                                           String gender,
+                                           int age,
+                                           double weight,
+                                           String weigthType,
+                                           double targetWeight,
+                                           String tarWeiType,
+                                           double weeks,
+                                           String weeksType,
+                                           String active)
+    {
+
+        double bmr = calculateBMR(context,height,heightType,gender,age,weight,weigthType);
+        Log.d("CaculationBMR", String.valueOf(bmr));
+        float activityLevel = getActivity(context,active);
+        Log.d("CaculationActivity", String.valueOf(activityLevel));
+        double calToSustainWeight = bmr * activityLevel;
+        Log.d("CaculationSusTain", String.valueOf(calToSustainWeight));
+
+        double calRequired = 0;
+
+        if(targetWeight<weight)
+        {
+            //Aim – Gain Weight
+
+            //Calories for losing weight = (weight in kg - target weight in kg) * (1100 / goal date in weeks)
+            //Required calories to achieve the target weight = calories to sustain weight - calories for losing weight
+
+            double calForLosingWeight = (covertWeight(context,weight,weigthType) - covertWeight(context,targetWeight,tarWeiType))
+                    *(1100/covertWeeks(context,weeks,weeksType));
+
+            Log.d("CaculationLosingWeight", String.valueOf(calForLosingWeight));
+
+            calRequired = calToSustainWeight - calForLosingWeight;
+        }
+        else  if(targetWeight>weight)
+        {
+            //Aim – Lose Weight
+
+            //Calories for gaining weight = (target weight in kg - weight in kg) * (1100 / goal date in weeks)
+            //Required calories to achieve the target weight = calories to sustain weight + calories for gaining weight
+
+            double calForGainingWeight = (covertWeight(context,targetWeight,tarWeiType) - covertWeight(context,weight,weigthType))
+                    *(1100/covertWeeks(context,weeks,weeksType));
+
+            Log.d("CaculationGainingWeight", String.valueOf(calForGainingWeight));
+
+            calRequired = calToSustainWeight + calForGainingWeight;
+        }
+
+        Log.d("CaculationcalRequired", String.valueOf(calRequired));
+        return calRequired;
+    }
+
+    public static float getActivity(Context context,String active)
+    {
+        float activeLevel = 0;
+
+        if(active.equalsIgnoreCase(context.getString(R.string.sedentart)))
+        {
+            activeLevel = AppConstants.sedentaryActive;
+        }
+        else if(active.equalsIgnoreCase(context.getString(R.string.slightlyActive)))
+        {
+            activeLevel = AppConstants.slightlyActive;
+        }
+        else if(active.equalsIgnoreCase(context.getString(R.string.moderatelyActive)))
+        {
+            activeLevel = AppConstants.moderatelyActive;
+        }
+        else if(active.equalsIgnoreCase(context.getString(R.string.veryActive)))
+        {
+            activeLevel = AppConstants.veryActive;
+        }
+        else if(active.equalsIgnoreCase(context.getString(R.string.extraActive)))
+        {
+            activeLevel = AppConstants.extraActive;
+        }
+
+        return activeLevel;
+    }
+
+
+    public static String calculateBMI(Context context,double height,String heightType,double weight,String weigthType)
+    {
+        double bmi = covertWeight(context,weight,weigthType)
+                / (covertHeightinM(context,height,heightType) * covertHeightinM(context,height,heightType));
+
+        Log.d("CaculationBmi", String.valueOf(bmi));
+
+        bmi =  Math.round(bmi);
+
+        return String.valueOf(bmi);
     }
 }

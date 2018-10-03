@@ -40,7 +40,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
     RelativeLayout rlCalories,rlDietPlan,rlUtilities;
 
     //TextView
-    TextView tvCalculatedBMI,tvTargetWeight,tvInboxCount;
+    TextView tvCalculatedBMI,tvTargetWeight,tvInboxCount,tvTarget;
 
     //DrawerLayout
     static DrawerLayout mDrawerLayout;
@@ -76,6 +76,8 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         tvCalculatedBMI= findViewById(R.id.tvCalculatedBMI);
         tvTargetWeight= findViewById(R.id.tvTargetWeight);
         tvInboxCount= findViewById(R.id.tvInboxCount);
+        tvTarget= findViewById(R.id.tvTarget);
+        tvName= findViewById(R.id.tvName);
 
         //RelativeLayout
         rlMenu= findViewById(R.id.rlMenu);
@@ -97,8 +99,6 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
 
         //ScrollView
         scrollSideMenu = findViewById(R.id.scroll_side_menu);
-
-        tvCalculatedBMI.setText(AppSettings.getString(AppSettings.bmi));
 
         rlMenu.setOnClickListener(this);
         rlSync.setOnClickListener(this);
@@ -129,6 +129,23 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
             tvInboxCount.setVisibility(View.VISIBLE);
             tvInboxCount.setText(AppSettings.getString(AppSettings.unreadCount));
         }
+
+        if(!AppSettings.getString(AppSettings.targetWeight).isEmpty())
+        {
+            tvTarget.setText("Target Weigth: "+AppSettings.getString(AppSettings.targetWeight)
+                    +"\nTarget Calories: "+AppSettings.getString(AppSettings.targetCalories)
+                    +"\nGoal Date: "+AppSettings.getString(AppSettings.targetDate));
+        }
+
+        tvCalculatedBMI.setText(AppUtils.calculateBMI(mActivity,
+                Double.valueOf(AppSettings.getString(AppSettings.height)),
+                AppSettings.getString(AppSettings.heightUnit),
+                Double.valueOf(AppSettings.getString(AppSettings.weight)),
+                AppSettings.getString(AppSettings.weightUnit)));
+
+        tvName.setText(AppSettings.getString(AppSettings.firstName)
+                + " "+ AppSettings.getString(AppSettings.lastName));
+
     }
 
     @Override
