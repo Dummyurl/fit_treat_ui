@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.fittreat.android.R;
 
+import code.utils.AppUtils;
 import code.view.BaseActivity;
 
 public class ForgotActivity extends BaseActivity implements View.OnClickListener {
@@ -51,6 +52,8 @@ public class ForgotActivity extends BaseActivity implements View.OnClickListener
         },1600);
 
         tvSubmit.setOnClickListener(this);
+
+        AppUtils.hideSoftKeyboard(mActivity);
     }
 
     private void upViewAnimation() {

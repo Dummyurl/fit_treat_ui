@@ -92,12 +92,14 @@ public class SelectionActivity extends BaseActivity  implements View.OnClickList
             case R.id.tvLogin:
 
                 startActivity(new Intent(mActivity, LoginActivity.class));
+                finish();
 
                 return;
 
             case R.id.tvRegister:
 
                 startActivity(new Intent(mActivity, RegisterActivity.class));
+                finish();
 
                 return;
         }

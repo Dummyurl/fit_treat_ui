@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -23,9 +24,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import code.database.AppSettings;
 import code.utils.AppConstants;
@@ -49,6 +51,13 @@ public class SimpleHTTPConnection {
      * @return
      */
     public static boolean isNetworkAvailable(@NonNull Context mActivity) {
+
+        if (android.os.Build.VERSION.SDK_INT > 9)
+        {
+            StrictMode.ThreadPolicy policy = new
+            StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
 
         boolean available = false;
         /** Getting the system's connectivity service */
@@ -119,7 +128,7 @@ public class SimpleHTTPConnection {
             URL url = new URL(mainUrl);
             byte[] postDataBytes = postData.toString().trim().getBytes("UTF-8");
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
             conn.setRequestMethod(method);
@@ -134,7 +143,7 @@ public class SimpleHTTPConnection {
             conn.getOutputStream().write(postDataBytes);
             int responseCode = conn.getResponseCode();
             AppUtils.print("==responseCode" + responseCode);
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
                 mReader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
                 StringBuilder sb = new StringBuilder();
                 for (int c; (c = mReader.read()) >= 0; )
@@ -176,7 +185,7 @@ public class SimpleHTTPConnection {
         try {
 
             URL mUrl = new URL(mainUrl);
-            HttpURLConnection httpConnection = (HttpURLConnection) mUrl.openConnection();
+            HttpsURLConnection httpConnection = (HttpsURLConnection) mUrl.openConnection();
             String baseAuthStr = AppSettings.getString(AppSettings.accessToken);
             AppUtils.print("==baseAuthStr" + baseAuthStr);
             if (!baseAuthStr.isEmpty())
@@ -192,7 +201,7 @@ public class SimpleHTTPConnection {
 
             int responseCode = httpConnection.getResponseCode();
 
-            if (responseCode == HttpURLConnection.HTTP_OK) {
+            if (responseCode == HttpsURLConnection.HTTP_OK) {
                 mReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
                 StringBuilder sb = new StringBuilder();
                 for (int c; (c = mReader.read()) >= 0; )
@@ -236,7 +245,7 @@ public class SimpleHTTPConnection {
             if (entity != null) {
                 int responseCode = response.getStatusLine().getStatusCode();
                 AppUtils.print("==responseCode" + responseCode);
-                if (responseCode == HttpURLConnection.HTTP_OK) {
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
                     InputStream is = entity.getContent();
                     mReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
                     StringBuilder sb = new StringBuilder();
