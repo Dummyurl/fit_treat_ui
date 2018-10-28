@@ -318,6 +318,109 @@
 				"description": "can be trigerred after 3 characters are entered\napi/searchSymptoms/{text that user entered}"
 			},
 			"response": []
+		},
+		{
+			"name": "Send Message to Admin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"5bd599fc01d82025f8bed22e\",\n\t\"msg\":\"This is a test message being sent to admin\"\n}"
+				},
+				"url": {
+					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/api/sendMsgToAdmin",
+					"protocol": "https",
+					"host": [
+						"fittreat",
+						"cfapps",
+						"us10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"sendMsgToAdmin"
+					]
+				},
+				"description": "id - accepts id of the user"
+			},
+			"response": []
+		},
+		{
+			"name": "Photo Update Service",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"5bd599fc01d82025f8bed22e\",\n\t\"userPhoto\":\"test photo update\"\n}"
+				},
+				"url": {
+					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/api/photoUpdate",
+					"protocol": "https",
+					"host": [
+						"fittreat",
+						"cfapps",
+						"us10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"photoUpdate"
+					]
+				},
+				"description": "id- id of the user\nuserPhoto - base64 string of photo"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Application Data",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"testmail@gmail.com\",\n\t\"password\":\"Asdf1234\"\n}"
+				},
+				"url": {
+					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/api/getAppData",
+					"protocol": "https",
+					"host": [
+						"fittreat",
+						"cfapps",
+						"us10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"getAppData"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
