@@ -229,6 +229,95 @@
 				"description": "/api/reloadMessages/{User Id}\n\nProvides Message Count as well along with unread message count"
 			},
 			"response": []
+		},
+		{
+			"name": "Get Meals For User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/api/getMeals/5bd5fc3db3f74a004ed84931",
+					"protocol": "https",
+					"host": [
+						"fittreat",
+						"cfapps",
+						"us10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"getMeals",
+						"5bd5fc3db3f74a004ed84931"
+					]
+				},
+				"description": "api/getMeals/{id}"
+			},
+			"response": []
+		},
+		{
+			"name": "First 5 symptoms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/api/initialSymptoms",
+					"protocol": "https",
+					"host": [
+						"fittreat",
+						"cfapps",
+						"us10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"initialSymptoms"
+					]
+				},
+				"description": "to be used when navigating to \"Search Symptoms\" view or anywhere so as to keep the data persisted"
+			},
+			"response": []
+		},
+		{
+			"name": "Search Symptoms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/api/searchSymptoms/ache",
+					"protocol": "https",
+					"host": [
+						"fittreat",
+						"cfapps",
+						"us10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"searchSymptoms",
+						"ache"
+					]
+				},
+				"description": "can be trigerred after 3 characters are entered\napi/searchSymptoms/{text that user entered}"
+			},
+			"response": []
 		}
 	]
 }
