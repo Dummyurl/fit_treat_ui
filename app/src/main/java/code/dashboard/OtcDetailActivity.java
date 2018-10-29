@@ -13,8 +13,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fittreat.android.R;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import code.database.AppSettings;
+import code.utils.AppConstants;
 import code.view.BaseActivity;
 
 public class OtcDetailActivity extends BaseActivity implements View.OnClickListener {
@@ -26,6 +35,8 @@ public class OtcDetailActivity extends BaseActivity implements View.OnClickListe
 
     //TextView
     TextView tvHeader, tvSymptoms,tvOtc;
+
+    ArrayList<HashMap<String, String>> OtcMedicineList = new ArrayList<HashMap<String, String>>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,47 @@ public class OtcDetailActivity extends BaseActivity implements View.OnClickListe
         tvOtc = findViewById(R.id.tvOtc);
 
         tvHeader.setText(AppSettings.getString(AppSettings.otcName));
+
+        try {
+            JSONObject jsonObject = new JSONObject(AppSettings.getString(AppSettings.json));
+
+            JSONArray jsonArray = jsonObject.getJSONArray("medicines");
+
+            for(int i=0;i<jsonArray.length();i++)
+            {
+                JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+
+                HashMap<String, String> hashMap = new HashMap();
+
+                String str = jsonObject1.getString("Ingredients").replaceAll("\\[", "").replaceAll("\\]", "");
+                //AppConstants.separated = str.split(",");
+
+                if(str.contains(","))
+                {
+                    str = str.replaceAll(",","\n\t").replaceAll(" ","");
+                }
+
+                hashMap.put("medicine",str.trim());
+                hashMap.put("name",jsonObject1.getString("Name"));
+                hashMap.put("id",jsonObject1.getString("_id"));
+
+                OtcMedicineList.add(hashMap);
+            }
+
+            String string = "";
+
+            for(int i=0;i<OtcMedicineList.size();i++)
+            {
+                string = string + OtcMedicineList.get(i).get("name")
+                        +"\nIngredients: "
+                        +"\n\t"+OtcMedicineList.get(i).get("medicine")+ "\n\n" ;
+            }
+
+            tvOtc.setText(string);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         rlBack.setOnClickListener(this);
         rlNearByDoctor.setOnClickListener(this);
