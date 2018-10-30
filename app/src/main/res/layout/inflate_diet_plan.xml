@@ -22,7 +22,8 @@
             android:layout_height="@dimen/_80sdp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_10sdp"
-            app:srcCompat="@mipmap/logo" />
+            app:srcCompat="@mipmap/logo_light"
+            android:scaleType="fitXY"/>
 
         <code.view.CustomTextView
             android:id="@+id/tvName"

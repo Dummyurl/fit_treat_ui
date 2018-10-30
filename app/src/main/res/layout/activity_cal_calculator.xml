@@ -81,6 +81,18 @@
 
                 </RelativeLayout>
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="match_parent"
+                    android:text="@string/height"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    app:customFont="OpenSans-Regular.ttf"/>
+
                 <RelativeLayout
                     android:id="@+id/rlHeight"
                     android:layout_width="@dimen/_250sdp"
@@ -118,11 +130,24 @@
 
                 </RelativeLayout>
 
+
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="match_parent"
+                    android:text="@string/weight"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    app:customFont="OpenSans-Regular.ttf"/>
+
                 <RelativeLayout
                     android:id="@+id/rlWeight"
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 
@@ -154,10 +179,24 @@
 
                 </RelativeLayout>
 
+
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="match_parent"
+                    android:text="@string/age"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    app:customFont="OpenSans-Regular.ttf"/>
+
+
                 <RelativeLayout
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 
@@ -180,11 +219,24 @@
 
                 </RelativeLayout>
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="match_parent"
+                    android:text="@string/target_weight"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    app:customFont="OpenSans-Regular.ttf"/>
+
+
                 <RelativeLayout
                     android:id="@+id/rlTWeight"
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 
@@ -216,11 +268,24 @@
 
                 </RelativeLayout>
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="match_parent"
+                    android:text="@string/time_period"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    app:customFont="OpenSans-Regular.ttf"/>
+
+
                 <RelativeLayout
                     android:id="@+id/rlTime"
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 
@@ -252,11 +317,24 @@
 
                 </RelativeLayout>
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="match_parent"
+                    android:text="@string/dailyActivities"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkGrey"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:layout_centerVertical="true"
+                    app:customFont="OpenSans-Regular.ttf"/>
+
+
                 <RelativeLayout
                     android:id="@+id/rlActivity"
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 

@@ -15,5 +15,6 @@ public class AppConstants {
     public static final float moderatelyActive = (float) 1.55;
     public static final float veryActive = (float) 1.725;
     public static final float extraActive = (float) 1.9;
+    public static String[] separated = {};
     public static final ArrayList<HashMap<String, String>> InboxList = new ArrayList();
 }

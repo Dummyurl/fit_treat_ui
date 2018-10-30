@@ -62,6 +62,9 @@
                 android:hint="@string/enter_symptoms"
                 android:textColorHint="@color/grey"
                 android:layout_toRightOf="@+id/rlSearch"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionSearch"
                 android:background="@null"/>
 
         </RelativeLayout>

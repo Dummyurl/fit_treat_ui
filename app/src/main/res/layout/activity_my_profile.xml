@@ -12,7 +12,7 @@
         android:layout_height="@dimen/_190sdp">
 
         <include
-            layout="@layout/inflate_header_curve"
+            layout="@layout/inflate_header_curve_profile"
             android:layout_height="match_parent"
             android:layout_width="match_parent" />
 
@@ -38,6 +38,17 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/email_id"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
+
                 <code.view.CustomEditText
                     android:id="@+id/etEmail"
                     android:layout_width="@dimen/_250sdp"
@@ -49,10 +60,21 @@
                     android:inputType="textEmailAddress"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     app:customFont="OpenSans-Regular.ttf"
                     android:singleLine="true"
                     android:background="@drawable/rectangle_edit_box"/>
+
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/gender"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
 
                 <code.view.CustomEditText
                     android:id="@+id/etGender"
@@ -64,10 +86,21 @@
                     android:textColor="@color/blackNew"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     app:customFont="OpenSans-Regular.ttf"
                     android:singleLine="true"
                     android:background="@drawable/rectangle_edit_box"/>
+
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/dob"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
 
                 <code.view.CustomEditText
                     android:id="@+id/etDob"
@@ -79,7 +112,7 @@
                     android:textColor="@color/blackNew"
                     android:paddingLeft="@dimen/_10sdp"
                     android:paddingRight="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     app:customFont="OpenSans-Regular.ttf"
                     android:singleLine="true"
                     android:background="@drawable/rectangle_edit_box"/>
@@ -94,6 +127,17 @@
                 android:orientation="vertical"
                 android:gravity="center">
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/first_name"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
+
                 <code.view.CustomEditText
                     android:id="@+id/etFirstName"
                     android:layout_width="@dimen/_250sdp"
@@ -105,10 +149,21 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:inputType="textCapWords"
                     android:paddingRight="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     app:customFont="OpenSans-Regular.ttf"
                     android:singleLine="true"
                     android:background="@drawable/rectangle_edit_box"/>
+
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/last_name"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
 
                 <code.view.CustomEditText
                     android:id="@+id/etLastName"
@@ -121,16 +176,27 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:inputType="textCapWords"
                     android:paddingRight="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     app:customFont="OpenSans-Regular.ttf"
                     android:singleLine="true"
                     android:background="@drawable/rectangle_edit_box"/>
+
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/height"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
 
                 <RelativeLayout
                     android:id="@+id/rlHeight"
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 
@@ -163,11 +229,22 @@
 
                 </RelativeLayout>
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/weight"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
+
                 <RelativeLayout
                     android:id="@+id/rlWeight"
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 
@@ -199,11 +276,22 @@
 
                 </RelativeLayout>
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/food_preferences"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
+
                 <RelativeLayout
                     android:id="@+id/rlFoodPre"
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 
@@ -220,11 +308,22 @@
 
                 </RelativeLayout>
 
+                <code.view.CustomTextView
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:hint="@string/medical_condition"
+                    android:textSize="@dimen/_13sdp"
+                    android:textColor="@color/blackNew"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:singleLine="true"/>
+
                 <RelativeLayout
                     android:id="@+id/rlMedCon"
                     android:layout_width="@dimen/_250sdp"
                     android:layout_height="@dimen/_40sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:visibility="visible"
                     android:background="@drawable/rectangle_edit_box">
 

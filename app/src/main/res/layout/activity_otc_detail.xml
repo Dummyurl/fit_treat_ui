@@ -31,7 +31,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp">
+                android:layout_height="@dimen/_40sdp"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="@dimen/_25sdp"
@@ -66,7 +67,8 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:paddingLeft="@dimen/_5sdp"
-                app:customFont="OpenSans-Regular.ttf"/>
+                app:customFont="OpenSans-Regular.ttf"
+                android:visibility="gone"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -97,7 +99,7 @@
                 android:id="@+id/tvOtc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/aboutUsText"
+                android:text=""
                 android:textColor="@color/darkGrey"
                 android:gravity="center_vertical"
                 android:textSize="@dimen/_14sdp"

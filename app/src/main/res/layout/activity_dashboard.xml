@@ -43,17 +43,18 @@
                     android:layout_marginTop="@dimen/_minus5sdp"
                     android:layout_below="@+id/tvCalculatedBMI"
                     android:textColor="@color/white"
-                    app:customFont="OpenSans-Regular.ttf"/>
+                    app:customFont="OpenSans-Regular.ttf"
+                    android:visibility="gone"/>
 
                 <code.view.CustomTextView
                     android:id="@+id/tvTarget"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/target_weight"
+                    android:text="@string/goal_weight"
                     android:textSize="@dimen/_11sdp"
-                    android:layout_below="@+id/tvH2"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_below="@+id/tvCalculatedBMI"
+                    android:layout_marginTop="@dimen/_minus5sdp"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/white"
                     app:customFont="OpenSans-Regular.ttf"/>
@@ -486,7 +487,8 @@
                 <RelativeLayout
                     android:id="@+id/rlReferences"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp">
+                    android:layout_height="@dimen/_35sdp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="@dimen/_20sdp"

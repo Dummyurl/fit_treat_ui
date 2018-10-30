@@ -32,7 +32,7 @@ public class ReferenceActivity extends BaseActivity implements View.OnClickListe
 
         //TextView for Header Text
         tvHeader = findViewById(R.id.tvHeader);
-        tvText = findViewById(R.id.tvText);
+        //tvText = findViewById(R.id.tvText);
 
         tvHeader.setText(getString(R.string.references));
 

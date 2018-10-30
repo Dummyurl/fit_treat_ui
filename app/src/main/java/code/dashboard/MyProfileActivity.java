@@ -1,16 +1,32 @@
 package code.dashboard;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
+import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -19,18 +35,26 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
+import com.fittreat.android.BuildConfig;
 import com.fittreat.android.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import code.common.SimpleHTTPConnection;
@@ -74,6 +98,22 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
 
     //ImageView
     ImageView ivCamera;
+
+
+    //String
+    public String picturePath="",filename="",ext="",encodedString="";
+
+    //Uri
+    Uri picUri,fileUri;
+
+    //StaticString
+    private static final String IMAGE_DIRECTORY_NAME = String.valueOf(R.string.app_name);
+
+    //Static Int
+    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100 , MEDIA_TYPE_IMAGE = 1;
+
+    //Bitmap
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +160,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         ivMiddle = findViewById(R.id.ivMiddle);
 
         tvHeader.setText(getString(R.string.my_profile));
-        ivMiddle.setImageResource(R.drawable.ic_user_white);
+        ivMiddle.setImageResource(R.mipmap.logo_light);
 
         settingValues();
 
@@ -148,6 +188,11 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         etHeight.setText(AppSettings.getString(AppSettings.height));
         etWeight.setText(AppSettings.getString(AppSettings.weight));
         etGender.setText(AppSettings.getString(AppSettings.gender));
+
+        if(!AppSettings.getString(AppSettings.profile).isEmpty())
+        {
+            ivMiddle.setImageBitmap(AppUtils.convertBase64ToBitmap(AppSettings.getString(AppSettings.profile)));
+        }
 
         if(AppSettings.getString(AppSettings.userPhoto).isEmpty())
         {
@@ -253,7 +298,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
 
             case R.id.ivCamera:
 
-
+                AlertChoose();
 
                 return;
 
@@ -466,4 +511,351 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
             AppUtils.showToastSort(mActivity, response);
         }
     }
+
+
+
+
+
+    public void AlertChoose() {
+        final Dialog dialog = new Dialog(mActivity,android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alert_choose);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        TextView tvChoose          = dialog.findViewById(R.id.textView79);
+        TextView tvCamera          = dialog.findViewById(R.id.textView80);
+        TextView tvLibrary         = dialog.findViewById(R.id.textView81);
+        TextView tvCancel          = dialog.findViewById(R.id.textView83);
+
+        dialog.show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        tvCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+
+                //Uri imageFileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // convert path to Uri
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                {
+                    fileUri = FileProvider.getUriForFile(mActivity, BuildConfig.APPLICATION_ID + ".provider", getOutputMediaFile(MEDIA_TYPE_IMAGE));
+
+                    Intent it = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    it.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                    startActivityForResult(it, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+                }
+                else
+                {
+                    // create Intent to take a picture and return control to the calling application
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+                    // start the image capture Intent
+                    startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+
+                }
+
+            }
+        });
+
+        tvLibrary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent,1);
+
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    public static String getFileType(String path){
+        String fileType = null;
+        fileType = path.substring(path.indexOf('.',path.lastIndexOf('/'))+1).toLowerCase();
+        return fileType;
+    }
+
+    public Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    private static File getOutputMediaFile(int type) {
+
+        // External sdcard location
+        File mediaStorageDir = new File(
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),IMAGE_DIRECTORY_NAME);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                android.util.Log.d(IMAGE_DIRECTORY_NAME, "Oops! Failed create "+ IMAGE_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + IMAGE_DIRECTORY_NAME + timeStamp + ".jpg");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 100) {
+            if (resultCode == Activity.RESULT_OK) {
+
+                picturePath = fileUri.getPath().toString();
+                filename = picturePath.substring(picturePath.lastIndexOf("/") + 1);
+
+                String selectedImagePath = picturePath;
+
+                ext = "jpg";
+
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(selectedImagePath, options);
+                final int REQUIRED_SIZE = 500;
+                int scale = 1;
+                while (options.outWidth / scale / 2 >= REQUIRED_SIZE && options.outHeight / scale / 2 >= REQUIRED_SIZE) scale *= 2;
+                options.inSampleSize = scale;
+                options.inJustDecodeBounds = false;
+                bitmap = BitmapFactory.decodeFile(selectedImagePath, options);
+
+                Matrix matrix = new Matrix();
+                matrix.postRotate(getImageOrientation(picturePath));
+                Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 30, bao);
+
+                bitmap = rotatedBitmap;
+
+                ivMiddle.setImageBitmap(rotatedBitmap);
+                encodedString = getEncoded64ImageStringFromBitmap(rotatedBitmap);
+
+                if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                    updateProfilePicApi();
+                } else {
+                    AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                }
+            }
+        }
+        else if (requestCode == 1) {
+            if (data != null) {
+                try {
+                    Uri contentURI = data.getData();
+                    //get the Uri for the captured image
+                    //  picUri = data.getData();
+                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
+                    Cursor cursor = mActivity.getContentResolver().query(contentURI,filePathColumn, null, null, null);
+                    cursor.moveToFirst();
+                    Log.v("piccc","pic");
+                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                    picturePath = cursor.getString(columnIndex);
+                    System.out.println("Image Path : " + picturePath);
+                    cursor.close();
+                    filename=picturePath.substring(picturePath.lastIndexOf("/")+1);
+                    ext = getFileType(picturePath);
+                    String selectedImagePath = picturePath;
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = true;
+                    BitmapFactory.decodeFile(selectedImagePath, options);
+                    final int REQUIRED_SIZE = 500;
+                    int scale = 1;
+                    while (options.outWidth / scale / 2 >= REQUIRED_SIZE && options.outHeight / scale / 2 >= REQUIRED_SIZE) scale *= 2;
+                    options.inSampleSize = scale;
+                    options.inJustDecodeBounds = false;
+                    bitmap = BitmapFactory.decodeFile(selectedImagePath, options);
+
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(getImageOrientation(picturePath));
+                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
+                    rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 30, bao);
+
+                    bitmap = rotatedBitmap;
+
+                    encodedString = getEncoded64ImageStringFromBitmap(rotatedBitmap);
+                    ivMiddle.setImageBitmap(rotatedBitmap);
+
+                    if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                        updateProfilePicApi();
+                    } else {
+                        AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            else
+            {
+                Toast.makeText(mActivity,"unable to select image",Toast.LENGTH_LONG).show();
+            }
+
+        }
+
+    }
+
+    public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream);
+        byte[] byteFormat = stream.toByteArray();
+        // get the base 64 string
+        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
+
+        return imgString;
+    }
+
+    public static int getImageOrientation(String imagePath){
+        int rotate = 0;
+        try {
+
+            File imageFile = new File(imagePath);
+            ExifInterface exif = new ExifInterface(
+                    imageFile.getAbsolutePath());
+            int orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL);
+
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    rotate = 270;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    rotate = 180;
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    rotate = 90;
+                    break;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return rotate;
+    }
+
+
+
+    private void updateProfilePicApi() {
+
+        AppUtils.showRequestDialog(mActivity);
+
+        String url = AppUrls.photoUpdate;
+        Log.v("updateProfilePicApi-URL", url);
+
+        JSONObject json_data = new JSONObject();
+
+        try {
+
+            json_data.put("id", AppSettings.getString(AppSettings.userId));
+            json_data.put("userPhoto",  encodedString);
+
+            Log.v("updateProfilePicApi", json_data.toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AndroidNetworking.post(url)
+                .addJSONObjectBody(json_data)
+                .addHeaders("Content-Type","application/json")
+                //.setContentType("application/json; charset=utf-8")
+                .setPriority(Priority.HIGH)
+                .setTag("updateProfileApi")
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        parsePicJSON(response);
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        AppUtils.hideDialog();
+                        // handle error
+                        if (error.getErrorCode() != 0) {
+                            AppUtils.showToastSort(mActivity,String.valueOf(error.getErrorCode()));
+                            Log.d("onError errorCode ", "onError errorCode : " + error.getErrorCode());
+                            Log.d("onError errorBody", "onError errorBody : " + error.getErrorBody());
+                            Log.d("onError errorDetail", "onError errorDetail : " + error.getErrorDetail());
+
+                            if( error.getErrorCode()==422)
+                            {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(error.getErrorBody());
+
+                                    AppUtils.showToastSort(mActivity, jsonObject.getString("error"));
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                        } else {
+                            AppUtils.showToastSort(mActivity, String.valueOf(error.getErrorDetail()));
+                        }
+                    }
+                });
+    }
+
+    private void parsePicJSON(String response){
+
+        AppUtils.hideDialog();
+
+        Log.d("response ", response.toString());
+
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+
+            if(jsonObject.has("error"))
+            {
+                AppUtils.showToastSort(mActivity, jsonObject.getString("error"));
+            }
+            else
+            {
+                AppSettings.putString(AppSettings.profile,encodedString);
+
+                settingValues();
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            AppUtils.showToastSort(mActivity, response);
+        }
+    }
+
 }

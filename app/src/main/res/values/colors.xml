@@ -11,4 +11,5 @@
     <color name="blueDark">#0089B7</color>
     <color name="blueGrey">#dbdada</color>
     <color name="red">#c83f44</color>
+    <color name="transparent">#a1030303</color>
 </resources>

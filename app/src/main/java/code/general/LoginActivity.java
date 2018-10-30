@@ -1,14 +1,22 @@
 package code.general;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,10 +59,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     //EditText
     EditText etEmail,etPassword;
 
+    private static final int REQUEST_PERMISSIONS = 1;
+
+    private static String[] PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        int result = ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA);
+
+        if(result!= PackageManager.PERMISSION_GRANTED)
+        {
+            getPermission();
+        }
 
         findViewById();
     }
@@ -217,10 +240,29 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             AppSettings.putString(AppSettings.userPhoto,jsonObject.getString("userPhoto"));
            AppSettings.putString(AppSettings.medicalCondition,jsonObject.getString("medicalCondition"));
            AppSettings.putString(AppSettings.foodPreference,jsonObject.getString("foodPreference"));
-           AppSettings.putString(AppSettings.targetWeight,jsonObject.getString("targetWeight"));
-           AppSettings.putString(AppSettings.targetDate,jsonObject.getString("targetDate"));
-           AppSettings.putString(AppSettings.targetCalories,jsonObject.getString("targetCalories"));
-           AppSettings.putString(AppSettings.userPhoto,jsonObject.getString("userPhoto"));
+            try {
+                AppSettings.putString(AppSettings.targetWeight,jsonObject.getString("targetWeight"));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                AppSettings.putString(AppSettings.targetWeight,"");
+            }
+
+            try {
+                AppSettings.putString(AppSettings.targetDate,jsonObject.getString("targetDate"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                AppSettings.putString(AppSettings.targetDate,"");
+            }
+
+            try {
+                AppSettings.putString(AppSettings.targetCalories,jsonObject.getString("targetCalories"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                AppSettings.putString(AppSettings.targetCalories,"");
+            }
+
+            AppSettings.putString(AppSettings.userPhoto,jsonObject.getString("userPhoto"));
            AppSettings.putString(AppSettings.role,jsonObject.getString("role"));
            AppSettings.putString(AppSettings.userId,jsonObject.getString("_id"));
            AppSettings.putString(AppSettings.age,jsonObject.getString("age"));
@@ -235,6 +277,50 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             e.printStackTrace();
             AppUtils.showToastSort(mActivity, response);
         }
+    }
+
+
+    public void getPermission() {
+        // BEGIN_INCLUDE(contacts_permission_request)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)
+                ||  ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                ||  ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ){
+            Log.d("Permission for contacts", "Displaying contacts permission rationale to provide additional context.");
+            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSIONS);
+        } else
+        {
+            // Contact permissions have not been granted yet. Request them directly.
+            ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSIONS);
+        }
+        // END_INCLUDE(contacts_permission_request)
+    }
+
+    // Callback with the request from calling requestPermissions(...)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        // Make sure it's our original READ_CONTACTS request
+        if (requestCode == REQUEST_PERMISSIONS) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        View view = getCurrentFocus();
+        if (view != null && (ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_MOVE) && view instanceof EditText && !view.getClass().getName().startsWith("android.webkit.")) {
+            int scrcoords[] = new int[2];
+            view.getLocationOnScreen(scrcoords);
+            float x = ev.getRawX() + view.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + view.getTop() - scrcoords[1];
+            if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
+                ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 }

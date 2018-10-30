@@ -28,6 +28,8 @@ public final class AppSettings extends OSettings {
     public static final String heightUnit       = "heightUnit";
     public static final String msgCount       = "msgCount";
     public static final String unreadCount       = "unreadCount";
+    public static final String json       = "json";
+    public static final String profile       = "profile";
 
     public AppSettings(Activity mActivity) {
         super(mActivity);

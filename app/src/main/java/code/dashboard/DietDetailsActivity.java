@@ -20,7 +20,7 @@ public class DietDetailsActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_us);
+        setContentView(R.layout.activity_diet_plan);
 
         findViewById();
     }
@@ -32,7 +32,7 @@ public class DietDetailsActivity extends BaseActivity implements View.OnClickLis
 
         //TextView for Header Text
         tvHeader = findViewById(R.id.tvHeader);
-        tvText = findViewById(R.id.tvText);
+        //tvText = findViewById(R.id.tvText);
 
         tvHeader.setText(getString(R.string.aboutUs));
 

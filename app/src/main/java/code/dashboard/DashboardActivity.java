@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
     boolean doubleBackToExitPressedOnce;
 
     //RoundedImageView
-    RoundedImageView ivPic;
+    ImageView ivPic;
 
     //TextView
     TextView tvName;
@@ -78,6 +79,8 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         tvInboxCount= findViewById(R.id.tvInboxCount);
         tvTarget= findViewById(R.id.tvTarget);
         tvName= findViewById(R.id.tvName);
+
+        ivPic= findViewById(R.id.ivPic);
 
         //RelativeLayout
         rlMenu= findViewById(R.id.rlMenu);
@@ -132,7 +135,8 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
 
         if(!AppSettings.getString(AppSettings.targetWeight).isEmpty())
         {
-            tvTarget.setText("Target Weigth: "+AppSettings.getString(AppSettings.targetWeight)
+            tvTarget.setText(getString(R.string.goal_weight)+": "+AppSettings.getString(AppSettings.targetWeight)
+                    +" "+AppSettings.getString(AppSettings.weightUnit)
                     +"\nTarget Calories: "+AppSettings.getString(AppSettings.targetCalories)
                     +"\nGoal Date: "+AppSettings.getString(AppSettings.targetDate));
         }
@@ -146,7 +150,13 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         tvName.setText(AppSettings.getString(AppSettings.firstName)
                 + " "+ AppSettings.getString(AppSettings.lastName));
 
+        if(!AppSettings.getString(AppSettings.profile).isEmpty())
+        {
+            ivPic.setImageBitmap(AppUtils.convertBase64ToBitmap(AppSettings.getString(AppSettings.profile)));
+        }
+
     }
+
 
     @Override
     public void onClick(View v) {
