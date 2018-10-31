@@ -3,7 +3,11 @@ package code.dashboard;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -354,8 +358,30 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
         TextView tvCal         = dialog.findViewById(R.id.textView81);
         TextView tvCancel          = dialog.findViewById(R.id.textView83);
 
-        tvSus.setText("\u25CF Calories needed to sustain your current weight are "+sus + " calories per day.");
-        tvCal.setText("\u25CF Calories needed to achieve your target weight are "+cal + " calories per day.");
+        String strStart="\u25CF Calories needed to sustain your current weight are ";
+        String strEnd=" calories per day.";
+
+        Spannable wordtoSpan = null;
+        String str = strStart +sus + strEnd;
+        String str1 = strStart +sus;
+        wordtoSpan = new SpannableString(str);
+        wordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blueDark)), strStart.length(), str1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        tvSus.setText(wordtoSpan);
+
+        Typeface font = Typeface.createFromAsset(getAssets(), "Arciform.otf");
+        tvSus.setTypeface(font);
+
+        strStart="\u25CF Calories needed to achieve your target weight are ";
+        strEnd=" calories per day.";
+        wordtoSpan = null;
+        str = strStart +cal + strEnd;
+        str1 = strStart +cal;
+        wordtoSpan = new SpannableString(str);
+        wordtoSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.blueDark)), strStart.length(), str1.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        tvCal.setText(wordtoSpan);
+        tvCal.setTypeface(font);
 
         dialog.show();
         dialog.setCancelable(false);

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cropLib/cropLib.iml" filepath="$PROJECT_DIR$/cropLib/cropLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/fit_treat_ui.iml" filepath="$PROJECT_DIR$/fit_treat_ui.iml" />
     </modules>
   </component>

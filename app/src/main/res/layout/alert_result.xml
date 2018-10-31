@@ -29,7 +29,7 @@
                 app:customFont="OpenSans-Regular.ttf"
                 android:layout_centerHorizontal="true"/>
 
-            <code.view.CustomTextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView80"
@@ -40,10 +40,9 @@
                 android:paddingRight="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_2sdp"
-                app:customFont="Arciform.otf"
-                android:textColor="@color/blueDark"/>
+                android:textColor="@color/blackNew"/>
 
-            <code.view.CustomTextView
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView81"
@@ -53,8 +52,7 @@
                 android:paddingLeft="@dimen/_8sdp"
                 android:paddingRight="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                app:customFont="Arciform.otf"
-                android:textColor="@color/blueDark"/>
+                android:textColor="@color/blackNew"/>
 
             <code.view.CustomTextView
                 android:layout_width="@dimen/_120sdp"

@@ -43,6 +43,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.StringRequestListener;
 import com.fittreat.android.BuildConfig;
 import com.fittreat.android.R;
+import com.soundcloud.android.crop.Crop;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -635,84 +636,15 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         if (requestCode == 100) {
             if (resultCode == Activity.RESULT_OK) {
 
-                picturePath = fileUri.getPath().toString();
-                filename = picturePath.substring(picturePath.lastIndexOf("/") + 1);
-
-                String selectedImagePath = picturePath;
-
-                ext = "jpg";
-
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inJustDecodeBounds = true;
-                BitmapFactory.decodeFile(selectedImagePath, options);
-                final int REQUIRED_SIZE = 500;
-                int scale = 1;
-                while (options.outWidth / scale / 2 >= REQUIRED_SIZE && options.outHeight / scale / 2 >= REQUIRED_SIZE) scale *= 2;
-                options.inSampleSize = scale;
-                options.inJustDecodeBounds = false;
-                bitmap = BitmapFactory.decodeFile(selectedImagePath, options);
-
-                Matrix matrix = new Matrix();
-                matrix.postRotate(getImageOrientation(picturePath));
-                Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 30, bao);
-
-                bitmap = rotatedBitmap;
-
-                ivMiddle.setImageBitmap(rotatedBitmap);
-                encodedString = getEncoded64ImageStringFromBitmap(rotatedBitmap);
-
-                if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
-                    updateProfilePicApi();
-                } else {
-                    AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
-                }
+                beginCrop(fileUri);
             }
         }
         else if (requestCode == 1) {
             if (data != null) {
                 try {
                     Uri contentURI = data.getData();
-                    //get the Uri for the captured image
-                    //  picUri = data.getData();
-                    String[] filePathColumn = { MediaStore.Images.Media.DATA };
-                    Cursor cursor = mActivity.getContentResolver().query(contentURI,filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-                    Log.v("piccc","pic");
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    picturePath = cursor.getString(columnIndex);
-                    System.out.println("Image Path : " + picturePath);
-                    cursor.close();
-                    filename=picturePath.substring(picturePath.lastIndexOf("/")+1);
-                    ext = getFileType(picturePath);
-                    String selectedImagePath = picturePath;
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inJustDecodeBounds = true;
-                    BitmapFactory.decodeFile(selectedImagePath, options);
-                    final int REQUIRED_SIZE = 500;
-                    int scale = 1;
-                    while (options.outWidth / scale / 2 >= REQUIRED_SIZE && options.outHeight / scale / 2 >= REQUIRED_SIZE) scale *= 2;
-                    options.inSampleSize = scale;
-                    options.inJustDecodeBounds = false;
-                    bitmap = BitmapFactory.decodeFile(selectedImagePath, options);
 
-                    Matrix matrix = new Matrix();
-                    matrix.postRotate(getImageOrientation(picturePath));
-                    Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-                    ByteArrayOutputStream bao = new ByteArrayOutputStream();
-                    rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 30, bao);
-
-                    bitmap = rotatedBitmap;
-
-                    encodedString = getEncoded64ImageStringFromBitmap(rotatedBitmap);
-                    ivMiddle.setImageBitmap(rotatedBitmap);
-
-                    if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
-                        updateProfilePicApi();
-                    } else {
-                        AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
-                    }
+                    beginCrop(contentURI);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -724,6 +656,9 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
                 Toast.makeText(mActivity,"unable to select image",Toast.LENGTH_LONG).show();
             }
 
+        }
+        else if (requestCode == Crop.REQUEST_CROP) {
+            handleCrop(resultCode, data);
         }
 
     }
@@ -855,6 +790,57 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         } catch (JSONException e) {
             e.printStackTrace();
             AppUtils.showToastSort(mActivity, response);
+        }
+    }
+
+
+    private void beginCrop(Uri source) {
+        picturePath = source.getPath().toString();
+        filename = picturePath.substring(picturePath.lastIndexOf("/") + 1);
+        Uri destination = Uri.fromFile(new File(this.getCacheDir(), filename));
+        Crop.of(source, destination).asSquare().start(this);
+    }
+
+    private void handleCrop(int resultCode, Intent result) {
+        if (resultCode == RESULT_OK) {
+
+            picturePath = Crop.getOutput(result).getPath().toString();
+            //picturePath = fileUri.getPath().toString();
+            filename = picturePath.substring(picturePath.lastIndexOf("/") + 1);
+
+            String selectedImagePath = picturePath;
+
+            ext = "jpg";
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(selectedImagePath, options);
+            final int REQUIRED_SIZE = 500;
+            int scale = 1;
+            while (options.outWidth / scale / 2 >= REQUIRED_SIZE && options.outHeight / scale / 2 >= REQUIRED_SIZE) scale *= 2;
+            options.inSampleSize = scale;
+            options.inJustDecodeBounds = false;
+            bitmap = BitmapFactory.decodeFile(selectedImagePath, options);
+
+            Matrix matrix = new Matrix();
+            matrix.postRotate(getImageOrientation(picturePath));
+            Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            ByteArrayOutputStream bao = new ByteArrayOutputStream();
+            rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 30, bao);
+
+            bitmap = rotatedBitmap;
+
+            ivMiddle.setImageBitmap(rotatedBitmap);
+            encodedString = getEncoded64ImageStringFromBitmap(rotatedBitmap);
+
+            if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                updateProfilePicApi();
+            } else {
+                AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+            }
+
+        } else if (resultCode == Crop.RESULT_ERROR) {
+            Toast.makeText(this, Crop.getError(result).getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 

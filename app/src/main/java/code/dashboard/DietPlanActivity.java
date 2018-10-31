@@ -194,7 +194,7 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
             holder.tvName.setText(data.get(position).get("name"));
             holder.tvDetails.setText(data.get(position).get("type")
             +"\n"+data.get(position).get("serving")+" "+getString(R.string.serving)
-            +"\n"+data.get(position).get("calories"));
+            +"\n"+data.get(position).get("calories")+" cals");
 
             try {
                 Picasso.get().load(data.get(position).get("photoURL")).into(holder.ivDietPhoto);

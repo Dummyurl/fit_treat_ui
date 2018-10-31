@@ -58,7 +58,7 @@
                 app:customFont="Arciform.otf"/>
 
             <code.view.CustomTextView
-                android:id="@+id/tvCalories"
+                android:id="@+id/tvTags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/blackNew"
@@ -69,12 +69,24 @@
                 android:background="@drawable/rectangle_edit_box"
                 app:customFont="Arciform.otf"/>
 
+            <code.view.CustomTextView
+                android:id="@+id/tvCalories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blackNew"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/_16sdp"
+                android:padding="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@drawable/rectangle_edit_box"
+                app:customFont="Arciform.otf"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rectangle_edit_box"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
                 android:orientation="vertical">
 
                 <code.view.CustomTextView
@@ -98,19 +110,6 @@
                     android:paddingRight="@dimen/_10sdp"/>
 
             </LinearLayout>
-
-
-            <code.view.CustomTextView
-                android:id="@+id/tvTags"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/blackNew"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/_16sdp"
-                android:padding="@dimen/_10sdp"
-                android:layout_margin="@dimen/_10sdp"
-                android:background="@drawable/rectangle_edit_box"
-                app:customFont="Arciform.otf"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

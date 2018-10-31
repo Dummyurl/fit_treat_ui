@@ -69,18 +69,18 @@ public class DietDetailsActivity extends BaseActivity implements View.OnClickLis
         try {
             JSONObject jsonObject = new JSONObject(AppSettings.getString(AppSettings.json));
 
-            tvHeader.setText(jsonObject.getString("name"));
+            //tvHeader.setText(jsonObject.getString("name"));
             tvName.setText(jsonObject.getString("name"));
             tvCalories.setText(getString(R.string.calorie)+": "+jsonObject.getString("calories"));
 
             String str = jsonObject.getString("dietType").replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"","").trim();
 
-            if(str.contains(","))
+            /*if(str.contains(","))
             {
                 str = str.replaceAll(",","\n").replaceAll(" ","").trim();
-            }
+            }*/
 
-            tvTags.setText(str);
+            tvTags.setText(str.trim());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 tvIngredients.setText(Html.fromHtml(jsonObject.getString("ingredients"), Html.FROM_HTML_MODE_COMPACT));

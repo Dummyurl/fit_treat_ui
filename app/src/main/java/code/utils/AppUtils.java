@@ -24,6 +24,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.Toolbar.LayoutParams;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -1026,5 +1028,12 @@ public class AppUtils {
         bmi =  Math.round(bmi);
 
         return String.valueOf(bmi);
+    }
+
+    public SpannableString changeFont(String text, String start) {
+        SpannableString mSpannableStringBuilder = new SpannableString(text);
+        mSpannableStringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), AppUtils.startPosition(start, text), AppUtils.endPosition(start, text), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return mSpannableStringBuilder;
     }
 }

@@ -74,10 +74,11 @@ public class OtcDetailActivity extends BaseActivity implements View.OnClickListe
                 String str = jsonObject1.getString("Ingredients").replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"","").trim();
                 //AppConstants.separated = str.split(",");
 
+                /*str = "\u25CF "+str;
                 if(str.contains(","))
                 {
-                    str = str.replaceAll(",","\n\t").replaceAll(" ","").trim();
-                }
+                    str = str.replaceAll(",","\n\u25CF ").replaceAll(" ","").trim();
+                }*/
 
                 hashMap.put("medicine",str.trim());
                 hashMap.put("name",jsonObject1.getString("Name"));
@@ -90,9 +91,8 @@ public class OtcDetailActivity extends BaseActivity implements View.OnClickListe
 
             for(int i=0;i<OtcMedicineList.size();i++)
             {
-                string = string + OtcMedicineList.get(i).get("name")
-                        +"\nIngredients: "
-                        +"\n\t"+OtcMedicineList.get(i).get("medicine")+ "\n\n" ;
+                string = string +"\u25CF"+ OtcMedicineList.get(i).get("name")
+                        +"\nIngredients: " +OtcMedicineList.get(i).get("medicine")+ "\n\n" ;
             }
 
             tvOtc.setText(string);
