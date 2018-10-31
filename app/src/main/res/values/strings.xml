@@ -49,6 +49,8 @@
     <string name="calCalculator">Calorie Requirement Calculator</string>
     <string name="calorie">Calorie</string>
     <string name="first_name">First Name</string>
+    <string name="logoutMSG">Are you sure to Logout?</string>
+    <string name="alert">Alert</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>

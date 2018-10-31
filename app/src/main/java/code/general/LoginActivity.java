@@ -113,8 +113,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvForgot.setOnClickListener(this);
         tvLogin.setOnClickListener(this);
 
-        etEmail.setText("test@gmail.com");
-        etPassword.setText("Asdf1234");
+        /*etEmail.setText("test@gmail.com");
+        etPassword.setText("Asdf1234");*/
 
         AppUtils.hideSoftKeyboard(mActivity);
     }
@@ -236,11 +236,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
            AppSettings.putString(AppSettings.dateOfBirth,jsonObject.getString("dateOfBirth"));
            AppSettings.putString(AppSettings.weight,jsonObject.getString("weight"));
            AppSettings.putString(AppSettings.height,jsonObject.getString("height"));
-           AppSettings.putString(AppSettings.bmi,jsonObject.getString("bmi"));
+
+           try {
+                AppSettings.putString(AppSettings.bmi,jsonObject.getString("bmi"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                AppSettings.putString(AppSettings.bmi,"");
+            }
+
             AppSettings.putString(AppSettings.userPhoto,jsonObject.getString("userPhoto"));
            AppSettings.putString(AppSettings.medicalCondition,jsonObject.getString("medicalCondition"));
            AppSettings.putString(AppSettings.foodPreference,jsonObject.getString("foodPreference"));
-            try {
+
+           try {
                 AppSettings.putString(AppSettings.targetWeight,jsonObject.getString("targetWeight"));
 
             } catch (JSONException e) {

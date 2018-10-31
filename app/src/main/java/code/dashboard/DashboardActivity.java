@@ -1,6 +1,7 @@
 package code.dashboard;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,7 +12,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -28,6 +32,7 @@ import org.json.JSONObject;
 
 import code.common.RoundedImageView;
 import code.database.AppSettings;
+import code.general.LoginActivity;
 import code.utils.AppUrls;
 import code.utils.AppUtils;
 import code.view.BaseActivity;
@@ -254,6 +259,9 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
 
             case R.id.rlLogout:
 
+                closeDrawer();
+                Alert();
+
                 return;
 
             case R.id.tvTargetWeight:
@@ -327,5 +335,54 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         }
     }
 
+
+    public void Alert() {
+        final Dialog dialog = new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alert_yes_no);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        TextView tv_text        = (TextView)dialog.findViewById(R.id.tv_alert_msg);
+        final TextView tvAlert       = (TextView)dialog.findViewById(R.id.tv_alert);
+        TextView tvyes          = (TextView)dialog.findViewById(R.id.tvOk);
+        TextView tvCancel          = (TextView)dialog.findViewById(R.id.tvCancel);
+
+        tvAlert.setText(getString(R.string.alert));
+        tv_text.setText(getString(R.string.logoutMSG));
+        tvyes.setText(getString(R.string.logout));
+        tvCancel.setText(getString(R.string.cancel));
+
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+
+        tvyes.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+
+                AppSettings.clearSharedPreference();
+                startActivity(new Intent(mActivity, LoginActivity.class));
+                finishAffinity();
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dialog.dismiss();
+
+            }
+        });
+    }
 
 }
