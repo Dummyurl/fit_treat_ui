@@ -1,13 +1,17 @@
 package code.dashboard;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -170,6 +174,36 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
 
                     //Toast.makeText(mActivity, String.valueOf(calCalorie), Toast.LENGTH_SHORT).show();
 
+                    double bmr = AppUtils.calculateBMR(mActivity,
+                            Double.valueOf(AppSettings.getString(AppSettings.height)),
+                            AppSettings.getString(AppSettings.heightUnit),
+                            AppSettings.getString(AppSettings.gender),
+                            Integer.parseInt(AppSettings.getString(AppSettings.age)),
+                            Double.valueOf(AppSettings.getString(AppSettings.weight)),
+                            AppSettings.getString(AppSettings.weightUnit));
+
+                    Log.d("CaculationBMR", String.valueOf(bmr));
+
+                    float activityLevel = AppUtils.getActivity(mActivity,
+                            spinnerActivity.getSelectedItem().toString());
+
+                    Log.d("CaculationActivity", String.valueOf(activityLevel));
+
+                    double calToSustainWeight = bmr * activityLevel;
+                    Log.d("CaculationSusTain", String.valueOf(calToSustainWeight));
+
+                    calToSustainWeight =  Math.round(calToSustainWeight);
+
+                    String calB = String.valueOf(calToSustainWeight);
+
+                    if(calB.contains("."))
+                    {
+                        String[] separated = calB.split("\\.");
+                        calB = separated[0];
+                    }
+
+                    AlertResult(calB,cal);
+
                     if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
                         userTargetWeightApi();
                     } else {
@@ -228,7 +262,7 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
     private void userTargetWeightApi() {
 
         AppUtils.hideSoftKeyboard(mActivity);
-        AppUtils.showRequestDialog(mActivity);
+        //AppUtils.showRequestDialog(mActivity);
 
         String url = AppUrls.targetWeight;
         Log.v("userTargetWeightApi-URL", url);
@@ -264,7 +298,7 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
 
                     @Override
                     public void onError(ANError error) {
-                        AppUtils.hideDialog();
+                        //AppUtils.hideDialog();
                         // handle error
                         if (error.getErrorCode() != 0) {
                             AppUtils.showToastSort(mActivity,String.valueOf(error.getErrorCode()));
@@ -286,7 +320,7 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
 
     private void parseJSON(String response){
 
-        AppUtils.hideDialog();
+        //AppUtils.hideDialog();
 
         Log.d("response ", response.toString());
 
@@ -295,12 +329,48 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
 
             AppUtils.showToastSort(mActivity, jsonObject.getString("status"));
 
-            onBackPressed();
+            //onBackPressed();
 
         } catch (JSONException e) {
             e.printStackTrace();
             AppUtils.showToastSort(mActivity, response);
         }
+    }
+
+
+    public void AlertResult(String sus,String cal) {
+        final Dialog dialog = new Dialog(mActivity,android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alert_result);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        TextView tvSus          = dialog.findViewById(R.id.textView80);
+        TextView tvCal         = dialog.findViewById(R.id.textView81);
+        TextView tvCancel          = dialog.findViewById(R.id.textView83);
+
+        tvSus.setText("\u25CF Calories needed to sustain your current weight are "+sus + " calories per day.");
+        tvCal.setText("\u25CF Calories needed to achieve your target weight are "+cal + " calories per day.");
+
+        dialog.show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+
+                onBackPressed();
+            }
+        });
+
     }
 
 }

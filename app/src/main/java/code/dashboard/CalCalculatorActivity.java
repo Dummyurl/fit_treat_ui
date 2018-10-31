@@ -1,11 +1,20 @@
 package code.dashboard;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -16,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.fittreat.android.BuildConfig;
 import com.fittreat.android.R;
 
 import java.util.ArrayList;
@@ -245,7 +255,37 @@ public class CalCalculatorActivity extends BaseActivity implements View.OnClickL
                         cal = separated[0];
                     }
 
-                    AppUtils.showToastSort(mActivity, cal);
+
+
+                    double bmr = AppUtils.calculateBMR(mActivity,
+                            Double.valueOf(etHeight.getText().toString().trim()),
+                            spinnerHeight.getSelectedItem().toString(),
+                            gender,
+                            Integer.parseInt(etAge.getText().toString().trim()),
+                            Double.valueOf(etWeight.getText().toString().trim()),
+                            spinnerWeight.getSelectedItem().toString());
+
+                    Log.d("CaculationBMR", String.valueOf(bmr));
+
+                    float activityLevel = AppUtils.getActivity(mActivity,
+                            spinnerActivity.getSelectedItem().toString());
+
+                    Log.d("CaculationActivity", String.valueOf(activityLevel));
+
+                    double calToSustainWeight = bmr * activityLevel;
+                    Log.d("CaculationSusTain", String.valueOf(calToSustainWeight));
+
+                    calToSustainWeight =  Math.round(calToSustainWeight);
+
+                    String calB = String.valueOf(calToSustainWeight);
+
+                    if(calB.contains("."))
+                    {
+                        String[] separated = calB.split("\\.");
+                        calB = separated[0];
+                    }
+
+                    AlertResult(calB,cal);
                 }
 
                 return;
@@ -294,4 +334,40 @@ public class CalCalculatorActivity extends BaseActivity implements View.OnClickL
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         return true;
     }
+
+    public void AlertResult(String sus,String cal) {
+        final Dialog dialog = new Dialog(mActivity,android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alert_result);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        TextView tvSus          = dialog.findViewById(R.id.textView80);
+        TextView tvCal         = dialog.findViewById(R.id.textView81);
+        TextView tvCancel          = dialog.findViewById(R.id.textView83);
+
+        tvSus.setText("\u25CF Calories needed to sustain your current weight are "+sus + " calories per day.");
+        tvCal.setText("\u25CF Calories needed to achieve your target weight are "+cal + " calories per day.");
+
+        dialog.show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+
+                onBackPressed();
+            }
+        });
+
+    }
+
 }

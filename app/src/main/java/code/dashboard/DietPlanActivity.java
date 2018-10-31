@@ -1,6 +1,7 @@
 package code.dashboard;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import code.common.SimpleHTTPConnection;
+import code.database.AppSettings;
 import code.utils.AppUrls;
 import code.utils.AppUtils;
 import code.view.BaseActivity;
@@ -182,6 +184,9 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
             holder.rlMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    AppSettings.putString(AppSettings.json,data.get(position).get("json"));
+                    startActivity(new Intent(mActivity, DietDetailsActivity.class));
 
                 }
             });

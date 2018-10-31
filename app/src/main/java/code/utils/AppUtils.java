@@ -922,7 +922,7 @@ public class AppUtils {
         }
         else  if(gender.equalsIgnoreCase(context.getString(R.string.female))){
             //BMR = 65.51 + (9.563 * weight in kg) + (1.85 * height in cm) - (4.676 * age in years)
-            bmr = 65.51 + (9.563 * covertWeight(context,weight,weightType))
+            bmr = 655.1 + (9.563 * covertWeight(context,weight,weightType))
                     + (1.85 * covertHeightinCM(context,height,heightType))
                     - (4.676 * age);
         }

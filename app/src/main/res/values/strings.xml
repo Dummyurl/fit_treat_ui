@@ -47,6 +47,7 @@
     <string name="forgot_password_heading">Forgot Password</string>
     <string name="submit">SUBMIT</string>
     <string name="calCalculator">Calorie Requirement Calculator</string>
+    <string name="calorie">Calorie</string>
     <string name="first_name">First Name</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>
@@ -92,5 +93,10 @@
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="gallery">Gallery</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="nutrition_info">Nutrition Info</string>
+    <string name="directions">Directions</string>
+    <string name="your_results_are">Your Results are:</string>
+    <string name="close">Close</string>
 
 </resources>
