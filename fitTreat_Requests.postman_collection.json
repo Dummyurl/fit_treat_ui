@@ -181,7 +181,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\":\"5bb12331f490ad00426b6f6d\",\n\t\"targetWeight\" : 72,\n\t\"targetDate\"\t: 1540837800000,\n\t\"targetCalories\" : -720\n}"
+					"raw": "{\n\t\"id\":\"5bdeba8d6c9447004ed379c3\",\n\t\"targetWeight\" : 72,\n\t\"targetDate\"\t: 1540837800000,\n\t\"targetCalories\" : -720,\n\t\"weightUnit\":\"kg\"\n}"
 				},
 				"url": {
 					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/api/targetWeight",
@@ -419,6 +419,37 @@
 						"getAppData"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtered Meals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://fittreat.cfapps.us10.hana.ondemand.com/api/filterMeals/Vegan/Juice",
+					"protocol": "https",
+					"host": [
+						"fittreat",
+						"cfapps",
+						"us10",
+						"hana",
+						"ondemand",
+						"com"
+					],
+					"path": [
+						"api",
+						"filterMeals",
+						"Vegan",
+						"Juice"
+					]
+				},
+				"description": "This service is only for filters - Snacks, Juice\n\nfilterMeals/{Snacks or Juice}/{Vegan or Vegetarian or Non-Vegetarian}\n\n3rd param should be extracted from user's food preference"
 			},
 			"response": []
 		}
