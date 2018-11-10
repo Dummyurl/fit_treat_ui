@@ -51,7 +51,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
     RelativeLayout rlCalories,rlDietPlan,rlUtilities;
 
     //TextView
-    TextView tvCalculatedBMI,tvTargetWeight,tvInboxCount,tvTarget;
+    TextView tvCalculatedBMI,tvTargetWeight,tvInboxCount,tvTarget,tvResult;
 
     //DrawerLayout
     static DrawerLayout mDrawerLayout;
@@ -89,6 +89,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         tvInboxCount= findViewById(R.id.tvInboxCount);
         tvTarget= findViewById(R.id.tvTarget);
         tvName= findViewById(R.id.tvName);
+        tvResult= findViewById(R.id.tvH2);
 
         ivPic= findViewById(R.id.ivPic);
 
@@ -143,20 +144,54 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
             tvInboxCount.setText(AppSettings.getString(AppSettings.unreadCount));
         }
 
+        tvCalculatedBMI.setText(AppUtils.calculateBMI(mActivity,
+                Double.valueOf(AppSettings.getString(AppSettings.height)),
+                AppSettings.getString(AppSettings.heightUnit),
+                Double.valueOf(AppSettings.getString(AppSettings.weight)),
+                AppSettings.getString(AppSettings.weightUnit)));
+
+        double bmi = Double.parseDouble(AppUtils.calculateBMI(mActivity,
+                Double.valueOf(AppSettings.getString(AppSettings.height)),
+                AppSettings.getString(AppSettings.heightUnit),
+                Double.valueOf(AppSettings.getString(AppSettings.weight)),
+                AppSettings.getString(AppSettings.weightUnit)));
+
+        Log.d("bmi", String.valueOf(bmi));
+
+        if(bmi<18.5)
+        {
+            tvResult.setText("Underweight");
+            tvCalculatedBMI.setTextColor(getResources().getColor(R.color.underweight));
+        }
+        else  if(bmi>=18.5 && bmi<=24.9)
+        {
+            tvResult.setText("Normal Weight");
+            tvCalculatedBMI.setTextColor(getResources().getColor(R.color.normal));
+        }
+        else  if(bmi>=25  && bmi<=29.9)
+        {
+            tvResult.setText("Overweight");
+            tvCalculatedBMI.setTextColor(getResources().getColor(R.color.overweight));
+        }
+        else  if(bmi>=30  && bmi<=34.9)
+        {
+            tvResult.setText("Obese");
+            tvCalculatedBMI.setTextColor(getResources().getColor(R.color.obese));
+        }
+
         if(!AppSettings.getString(AppSettings.targetWeight).isEmpty())
         {
             Typeface font = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
 
             String str1 = getString(R.string.goal_weight)+": "+AppSettings.getString(AppSettings.targetWeight)
-                    +" "+AppSettings.getString(AppSettings.weightUnit)
-                    +"\nTarget Calories: ";
+                    +" "+AppSettings.getString(AppSettings.weightUnit);
 
-            String str2 = str1+AppSettings.getString(AppSettings.targetCalories);
+            String str2 = str1+"\nTarget Calories: "+AppSettings.getString(AppSettings.targetCalories);
 
             String str = getString(R.string.goal_weight)+": "+AppSettings.getString(AppSettings.targetWeight)
                     +" "+AppSettings.getString(AppSettings.weightUnit)
                     +"\nTarget Calories: "+AppSettings.getString(AppSettings.targetCalories)
-                    +"\nGoal Date: "+AppSettings.getString(AppSettings.targetDate);
+                    +"\nGoal Date: "+AppUtils.convertDate(AppSettings.getString(AppSettings.targetDate));
 
             if(AppSettings.getString(AppSettings.targetCalories).contains("-"))
             {
@@ -168,19 +203,13 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
             else
             {
                 SpannableString spannableString = new SpannableString(str);
-                ForegroundColorSpan foregroundSpan = new ForegroundColorSpan(Color.GREEN);
+                ForegroundColorSpan foregroundSpan = new ForegroundColorSpan(getResources().getColor(R.color.green));
                 spannableString.setSpan(foregroundSpan,  str1.length(), str2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 tvTarget.setText(spannableString);
             }
 
             tvTarget.setTypeface(font);
         }
-
-        tvCalculatedBMI.setText(AppUtils.calculateBMI(mActivity,
-                Double.valueOf(AppSettings.getString(AppSettings.height)),
-                AppSettings.getString(AppSettings.heightUnit),
-                Double.valueOf(AppSettings.getString(AppSettings.weight)),
-                AppSettings.getString(AppSettings.weightUnit)));
 
         tvName.setText(AppSettings.getString(AppSettings.firstName)
                 + " "+ AppSettings.getString(AppSettings.lastName));

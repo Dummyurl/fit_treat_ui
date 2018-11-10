@@ -45,7 +45,7 @@ import code.view.BaseActivity;
 public class TargetActivity extends BaseActivity implements View.OnClickListener {
 
     //RelativeLayout
-    RelativeLayout rlBack;
+    RelativeLayout rlBack,rlInfo;
 
     //TextView
     TextView tvHeader,tvSubmit;
@@ -73,6 +73,7 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
 
         //RelativeLayout
         rlBack = findViewById(R.id.rlBack);
+        rlInfo = findViewById(R.id.rlInfo);
 
         //TextView for Header Text
         tvHeader = findViewById(R.id.tvHeader);
@@ -86,6 +87,8 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
         spinnerTarWeight = findViewById(R.id.spinnerTarWeight);
         spinnerTime= findViewById(R.id.spinnerTime);
         spinnerActivity= findViewById(R.id.spinnerActivity);
+
+        rlInfo.setVisibility(View.VISIBLE);
 
         tvHeader.setText(getString(R.string.target_weight));
         ivMiddle.setImageResource(R.drawable.ic_target_weight);
@@ -117,6 +120,7 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
 
         rlBack.setOnClickListener(this);
         tvSubmit.setOnClickListener(this);
+        rlInfo.setOnClickListener(this);
 
         AppUtils.hideSoftKeyboard(mActivity);
     }
@@ -128,6 +132,12 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
             case R.id.rlBack:
 
                 onBackPressed();
+
+                return;
+
+            case R.id.rlInfo:
+
+                AlertInfo();
 
                 return;
 
@@ -395,6 +405,43 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
                 dialog.dismiss();
 
                 onBackPressed();
+            }
+        });
+
+    }
+
+    public void AlertInfo() {
+        final Dialog dialog = new Dialog(mActivity,android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.alert_info);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_BLUR_BEHIND;
+        window.setAttributes(wlp);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+
+        TextView tvInfo          = dialog.findViewById(R.id.textView80);
+        TextView tvCancel          = dialog.findViewById(R.id.textView83);
+
+        String info1="\u25CF Sedentary Activity Level – When a person has little to no exercise";
+        String info2="\n\n\u25CF Slightly Active – When a person has light exercise or light sports at least one to three times per week";
+        String info3="\n\n\u25CF Moderately Active – When a person has a moderate amount of exercises or sports three to five times per week";
+        String info4="\n\n\u25CF Very Active – When a person does hard exercises or sports six to seven times per week";
+        String info5="\n\n\u25CF Extra Active – When a person does rigorous exercises or sports or physical training";
+
+        tvInfo.setText(info1+info2+info3+info4+info5);
+
+        dialog.show();
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
             }
         });
 

@@ -12,4 +12,9 @@
     <color name="blueGrey">#dbdada</color>
     <color name="red">#c83f44</color>
     <color name="transparent">#a1030303</color>
+    <color name="green">#95dd04</color>
+    <color name="underweight">#ffe145</color>
+    <color name="normal">#95dd04</color>
+    <color name="overweight">#ff9617</color>
+    <color name="obese">#ff1717</color>
 </resources>

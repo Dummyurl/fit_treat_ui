@@ -38,13 +38,22 @@
             app:customFont="Arciform.otf"
             android:layout_toRightOf="@+id/rlBack"/>
 
+        <ImageView
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="match_parent"
+            android:id="@+id/ivReset"
+            android:layout_marginRight="@dimen/_10sdp"
+            app:srcCompat="@drawable/ic_refresh"
+            android:layout_toLeftOf="@+id/rlFilter"
+            android:visibility="gone"/>
+
         <RelativeLayout
             android:id="@+id/rlFilter"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/_10sdp"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <ImageView
                 android:layout_width="@dimen/_15sdp"

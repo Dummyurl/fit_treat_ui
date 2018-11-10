@@ -27,12 +27,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/your_current_bmi"
-                    android:textSize="@dimen/_11sdp"
-                    android:layout_marginTop="@dimen/_minus5sdp"
+                    android:text=""
+                    android:textSize="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_95sdp"
                     android:textColor="@color/white"
                     app:customFont="OpenSans-Regular.ttf"
-                    android:visibility="gone"/>
+                    android:visibility="visible"/>
 
                 <TextView
                     android:id="@+id/tvTarget"
@@ -40,8 +40,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text=""
-                    android:textSize="@dimen/_11sdp"
-                    android:layout_marginTop="@dimen/_95sdp"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_below="@+id/tvH2"
                     android:layout_centerHorizontal="true"
                     android:textColor="@color/white"/>
 
@@ -259,7 +259,7 @@
             android:choiceMode="singleChoice"
             android:dividerHeight="@dimen/_2sdp"
             android:scrollbars="none"
-            android:layout_gravity="end"
+            android:layout_gravity="start"
             android:background="@mipmap/menu_background">
 
             <LinearLayout

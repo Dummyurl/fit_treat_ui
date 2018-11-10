@@ -39,7 +39,7 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
     GridLayoutManager mGridLayoutManager;
 
     //RelativeLayout
-    RelativeLayout rlBack,rlFilter,rlFilterMain,rlBreakfast,rlLunch,rlDinner,rlOnlyLiquids;
+    RelativeLayout rlBack,rlFilter,rlFilterMain,rlBreakfast,rlLunch,rlDinner,rlSnack,rlJuice;
 
     //RecyclerView
     RecyclerView recyclerView;
@@ -53,6 +53,9 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
 
     //View
     View view;
+
+    //ImageView
+    ImageView ivReset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,11 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
         rlBreakfast= findViewById(R.id.rlBreakfast);
         rlLunch= findViewById(R.id.rlLunch);
         rlDinner= findViewById(R.id.rlDinner);
-        rlOnlyLiquids= findViewById(R.id.rlOnlyLiquids);
+        rlSnack= findViewById(R.id.rlSnack);
+        rlJuice= findViewById(R.id.rlJuice);
+
+        //ImageView
+        ivReset= findViewById(R.id.ivReset);
 
         //View when filter is open
         view= findViewById(R.id.view);
@@ -85,6 +92,7 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
         tvHeader.setText(getString(R.string.dietPlan));
         rlFilter.setVisibility(View.VISIBLE);
         rlFilterMain.setVisibility(View.GONE);
+        ivReset.setVisibility(View.VISIBLE);
 
         mGridLayoutManager = new GridLayoutManager(mActivity, 1);
         recyclerView.setLayoutManager(mGridLayoutManager);
@@ -101,13 +109,25 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
         rlBreakfast.setOnClickListener(this);
         rlLunch.setOnClickListener(this);
         rlDinner.setOnClickListener(this);
-        rlOnlyLiquids.setOnClickListener(this);
+        rlSnack.setOnClickListener(this);
+        rlJuice.setOnClickListener(this);
         view.setOnClickListener(this);
+        ivReset.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.ivReset:
+
+                if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                    getDietPlanApi();
+                } else {
+                    AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                }
+
+                return;
 
             case R.id.rlBack:
 
@@ -135,6 +155,12 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
                 view.setVisibility(View.GONE);
                 rlFilterMain.setVisibility(View.GONE);
 
+                if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                    getFilterMealsApi(getString(R.string.breakfast));
+                } else {
+                    AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                }
+
                 return;
 
             case R.id.view:
@@ -149,6 +175,12 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
                 view.setVisibility(View.GONE);
                 rlFilterMain.setVisibility(View.GONE);
 
+                if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                    getFilterMealsApi(getString(R.string.lunch));
+                } else {
+                    AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                }
+
                 return;
 
             case R.id.rlDinner:
@@ -156,12 +188,37 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
                 view.setVisibility(View.GONE);
                 rlFilterMain.setVisibility(View.GONE);
 
+                if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                    getFilterMealsApi(getString(R.string.dinner));
+                } else {
+                    AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                }
+
                 return;
 
-            case R.id.rlOnlyLiquids:
+            case R.id.rlSnack:
 
                 view.setVisibility(View.GONE);
                 rlFilterMain.setVisibility(View.GONE);
+
+                if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                    getFilterMealsApi(getString(R.string.snack));
+                } else {
+                    AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                }
+
+                return;
+
+            case R.id.rlJuice:
+
+                view.setVisibility(View.GONE);
+                rlFilterMain.setVisibility(View.GONE);
+
+                if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                    getFilterMealsApi(getString(R.string.juice));
+                } else {
+                    AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                }
 
                 return;
         }
@@ -317,5 +374,105 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
         recyclerView.setAdapter(adapter);
 
     }
+
+
+
+
+
+    private void getFilterMealsApi(String search) {
+
+        AppUtils.showRequestDialog(mActivity);
+
+        String url = AppUrls.filterMeals
+                +search
+                +"/"+AppSettings.getString(AppSettings.foodPreference)
+                +"/"+AppSettings.getString(AppSettings.userId);
+        Log.v("getFilterMealsApi-URL", url);
+
+        AndroidNetworking.get(url)
+                .addHeaders("Content-Type","application/json")
+                //.setContentType("application/json; charset=utf-8")
+                .setPriority(Priority.HIGH)
+                .setTag("getFilterMealsApi")
+                .build()
+                .getAsString(new StringRequestListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        parseFilterMealsJSON(response);
+                    }
+
+                    @Override
+                    public void onError(ANError error) {
+                        AppUtils.hideDialog();
+                        // handle error
+                        if (error.getErrorCode() != 0) {
+                            AppUtils.showToastSort(mActivity,String.valueOf(error.getErrorCode()));
+                            Log.d("onError errorCode ", "onError errorCode : " + error.getErrorCode());
+                            Log.d("onError errorBody", "onError errorBody : " + error.getErrorBody());
+                            Log.d("onError errorDetail", "onError errorDetail : " + error.getErrorDetail());
+
+                            if( error.getErrorCode()==422)
+                            {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(error.getErrorBody());
+
+                                    AppUtils.showToastSort(mActivity, jsonObject.getString("error"));
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                        } else {
+                            AppUtils.showToastSort(mActivity, String.valueOf(error.getErrorDetail()));
+                        }
+                    }
+                });
+    }
+
+    private void parseFilterMealsJSON(String response){
+
+        AppUtils.hideDialog();
+
+        DietPlanList.clear();
+
+        Log.d("response ", response.toString());
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+
+            for(int i=0;i<jsonArray.length();i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                HashMap<String, String> hashMap = new HashMap();
+
+                hashMap.put("id",jsonObject.getString("_id"));
+                hashMap.put("name",jsonObject.getString("name"));
+                hashMap.put("calories",jsonObject.getString("calories"));
+                try {
+                    hashMap.put("type",jsonObject.getString("cuisine"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    hashMap.put("type","");
+                }
+                hashMap.put("serving",jsonObject.getString("servingSize"));
+                hashMap.put("photoURL",jsonObject.getString("photoURL"));
+                hashMap.put("json",jsonObject.toString());
+
+                DietPlanList.add(hashMap);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            AppUtils.showToastSort(mActivity, response);
+        }
+
+        adapter = new Adapter(DietPlanList);
+        recyclerView.setAdapter(adapter);
+
+    }
+
 
 }

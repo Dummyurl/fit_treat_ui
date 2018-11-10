@@ -32,8 +32,8 @@
 
     <RelativeLayout
         android:id="@+id/rlFilterMain"
-        android:layout_width="@dimen/_120sdp"
-        android:layout_height="@dimen/_115sdp"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_190sdp"
         android:background="@mipmap/filter_box"
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/_31sdp"
@@ -43,12 +43,12 @@
         <RelativeLayout
             android:id="@+id/rlBreakfast"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_25sdp"
-            android:layout_marginTop="@dimen/_12sdp">
+            android:layout_height="@dimen/_35sdp"
+            android:layout_marginTop="@dimen/_15sdp">
 
             <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:id="@+id/ivBreakfast"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ic_filter_option"
@@ -61,7 +61,7 @@
                 android:text="@string/breakfast"
                 android:textColor="@color/darkGrey"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_14sdp"
                 android:paddingLeft="@dimen/_6sdp"
                 app:customFont="OpenSans-Regular.ttf"
                 android:layout_toRightOf="@+id/ivBreakfast"/>
@@ -71,12 +71,12 @@
         <RelativeLayout
             android:id="@+id/rlLunch"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_below="@+id/rlBreakfast">
 
             <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:id="@+id/ivLunch"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ic_filter_option"
@@ -89,7 +89,7 @@
                 android:text="@string/lunch"
                 android:textColor="@color/darkGrey"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_14sdp"
                 android:paddingLeft="@dimen/_6sdp"
                 app:customFont="OpenSans-Regular.ttf"
                 android:layout_toRightOf="@+id/ivLunch"/>
@@ -99,12 +99,12 @@
         <RelativeLayout
             android:id="@+id/rlDinner"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_below="@+id/rlLunch">
 
             <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
                 android:id="@+id/ivDinner"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ic_filter_option"
@@ -117,7 +117,7 @@
                 android:text="@string/dinner"
                 android:textColor="@color/darkGrey"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_14sdp"
                 android:paddingLeft="@dimen/_6sdp"
                 app:customFont="OpenSans-Regular.ttf"
                 android:layout_toRightOf="@+id/ivDinner"/>
@@ -125,30 +125,58 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rlOnlyLiquids"
+            android:id="@+id/rlSnack"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_25sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_below="@+id/rlDinner">
 
             <ImageView
-                android:layout_width="@dimen/_18sdp"
-                android:layout_height="@dimen/_18sdp"
-                android:id="@+id/ivOnlyLiquids"
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:id="@+id/ivSnack"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ic_filter_option"
                 android:layout_marginLeft="@dimen/_10sdp"/>
 
             <code.view.CustomTextView
-                android:id="@+id/tvOnlyLiquids"
+                android:id="@+id/tvSnack"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/only_liquids"
+                android:text="@string/snack"
                 android:textColor="@color/darkGrey"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_14sdp"
                 android:paddingLeft="@dimen/_6sdp"
                 app:customFont="OpenSans-Regular.ttf"
-                android:layout_toRightOf="@+id/ivOnlyLiquids"/>
+                android:layout_toRightOf="@+id/ivSnack"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlJuice"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_below="@+id/rlSnack">
+
+            <ImageView
+                android:layout_width="@dimen/_22sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:id="@+id/ivJuice"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_filter_option"
+                android:layout_marginLeft="@dimen/_10sdp"/>
+
+            <code.view.CustomTextView
+                android:id="@+id/tvJuice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/juice"
+                android:textColor="@color/darkGrey"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/_14sdp"
+                android:paddingLeft="@dimen/_6sdp"
+                app:customFont="OpenSans-Regular.ttf"
+                android:layout_toRightOf="@+id/ivJuice"/>
 
         </RelativeLayout>
 

@@ -22,5 +22,6 @@ public class AppUrls {
     public static final String searchSymptoms = baseUrl+"api/searchSymptoms/";
     public static final String getAppData = baseUrl+"api/getAppData";
     public static final String sendMsgToAdmin = baseUrl+"api/sendMsgToAdmin";
+    public static final String filterMeals = baseUrl+"api/filterMeals/";
 
 }

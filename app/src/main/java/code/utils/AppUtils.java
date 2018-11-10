@@ -1030,6 +1030,23 @@ public class AppUtils {
         return String.valueOf(bmi);
     }
 
+
+    public static String convertDate(String dateToConvert)
+    {
+        SimpleDateFormat spf=new SimpleDateFormat("yyyy/MM/DD");
+        Date newDate= null;
+        try {
+            newDate = spf.parse(dateToConvert);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        spf= new SimpleDateFormat("dd-MM-yyyy");
+        dateToConvert = spf.format(newDate);
+        System.out.println(dateToConvert);
+
+        return  dateToConvert;
+    }
+
     public SpannableString changeFont(String text, String start) {
         SpannableString mSpannableStringBuilder = new SpannableString(text);
         mSpannableStringBuilder.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), AppUtils.startPosition(start, text), AppUtils.endPosition(start, text), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

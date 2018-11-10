@@ -100,5 +100,8 @@
     <string name="directions">Directions</string>
     <string name="your_results_are">Your Results are:</string>
     <string name="close">Close</string>
+    <string name="snack">Snack</string>
+    <string name="juice">Juice</string>
+    <string name="activity_levels">Activity Levels</string>
 
 </resources>
