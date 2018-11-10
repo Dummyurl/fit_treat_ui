@@ -1,16 +1,13 @@
 package code.dashboard;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.text.Spannable;
@@ -26,19 +23,10 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.common.Priority;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.fittreat.android.R;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import code.common.RoundedImageView;
 import code.database.AppSettings;
 import code.general.LoginActivity;
-import code.utils.AppUrls;
 import code.utils.AppUtils;
 import code.view.BaseActivity;
 
@@ -47,7 +35,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
     private static final int STORAGE_PERMISSION_CODE = 50;
 
     //RelativeLayout
-    RelativeLayout rlMenu,rlSync,rlProfile,rlInbox,rlNearByDoctor,rlNearByPharmacy,rlWrite,rlAboutUs,rlReferences,rlLogout;
+    RelativeLayout rlMenu, rlInfo,rlProfile,rlInbox,rlNearByDoctor,rlNearByPharmacy,rlWrite,rlAboutUs,rlReferences,rlLogout;
     RelativeLayout rlCalories,rlDietPlan,rlUtilities;
 
     //TextView
@@ -65,7 +53,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
     boolean doubleBackToExitPressedOnce;
 
     //RoundedImageView
-    ImageView ivPic;
+    ImageView ivPic,ivInfoMain;
 
     //TextView
     TextView tvName;
@@ -92,10 +80,11 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         tvResult= findViewById(R.id.tvH2);
 
         ivPic= findViewById(R.id.ivPic);
+        ivInfoMain= findViewById(R.id.ivInfoMain);
 
         //RelativeLayout
         rlMenu= findViewById(R.id.rlMenu);
-        rlSync= findViewById(R.id.rlInfo);
+        rlInfo = findViewById(R.id.rlInfo);
         rlProfile= findViewById(R.id.rlProfile);
         rlInbox= findViewById(R.id.rlInbox);
         rlNearByDoctor= findViewById(R.id.rlNearByDoctor);
@@ -115,7 +104,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         scrollSideMenu = findViewById(R.id.scroll_side_menu);
 
         rlMenu.setOnClickListener(this);
-        rlSync.setOnClickListener(this);
+        rlInfo.setOnClickListener(this);
         rlProfile.setOnClickListener(this);
         rlInbox.setOnClickListener(this);
         rlNearByDoctor.setOnClickListener(this);
@@ -127,6 +116,7 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         rlDietPlan.setOnClickListener(this);
         rlUtilities.setOnClickListener(this);
         tvTargetWeight.setOnClickListener(this);
+        ivInfoMain.setOnClickListener(this);
     }
 
     @Override
@@ -161,21 +151,25 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
         if(bmi<18.5)
         {
             tvResult.setText("Underweight");
+            tvResult.setTextColor(getResources().getColor(R.color.underweight));
             tvCalculatedBMI.setTextColor(getResources().getColor(R.color.underweight));
         }
         else  if(bmi>=18.5 && bmi<=24.9)
         {
             tvResult.setText("Normal Weight");
+            tvResult.setTextColor(getResources().getColor(R.color.normal));
             tvCalculatedBMI.setTextColor(getResources().getColor(R.color.normal));
         }
         else  if(bmi>=25  && bmi<=29.9)
         {
             tvResult.setText("Overweight");
+            tvResult.setTextColor(getResources().getColor(R.color.overweight));
             tvCalculatedBMI.setTextColor(getResources().getColor(R.color.overweight));
         }
         else  if(bmi>=30  && bmi<=34.9)
         {
             tvResult.setText("Obese");
+            tvResult.setTextColor(getResources().getColor(R.color.obese));
             tvCalculatedBMI.setTextColor(getResources().getColor(R.color.obese));
         }
 
@@ -234,6 +228,14 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
                 return;
 
             case R.id.rlInfo:
+
+                ivInfoMain.setVisibility(View.VISIBLE);
+
+                return;
+
+            case R.id.ivInfoMain:
+
+                ivInfoMain.setVisibility(View.GONE);
 
                 return;
 

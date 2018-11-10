@@ -100,7 +100,7 @@
                             android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
                             android:layout_marginRight="@dimen/_5sdp"
-                            app:srcCompat="@drawable/ic_refresh"/>
+                            app:srcCompat="@drawable/ic_info"/>
 
                     </RelativeLayout>
 
@@ -248,6 +248,15 @@
                 </LinearLayout>
 
             </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/ivInfoMain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/instruction"
+                android:scaleType="fitXY"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/_minus20sdp"/>
 
         </RelativeLayout>
 
