@@ -279,6 +279,7 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
             json_data.put("targetWeight",AppSettings.getString(AppSettings.targetWeight));
             json_data.put("targetDate",  AppSettings.getString(AppSettings.targetDate));
             json_data.put("targetCalories", AppSettings.getString(AppSettings.targetCalories));
+            json_data.put("weightUnit", AppSettings.getString(AppSettings.weightUnit));
 
             Log.v("userTargetWeightApi", json_data.toString());
 

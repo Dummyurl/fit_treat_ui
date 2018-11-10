@@ -82,7 +82,7 @@ public class UtilitiesActivity extends BaseActivity implements View.OnClickListe
 
             case R.id.rlNearByDoctor:
 
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+               /* if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -96,13 +96,17 @@ public class UtilitiesActivity extends BaseActivity implements View.OnClickListe
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION}, STORAGE_PERMISSION_CODE);
                     }
-                }
+                }*/
+
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=near+by+doctors"));
+                intent.setPackage("com.google.android.apps.maps");
+                startActivity(intent);
 
                 return;
 
             case R.id.rlNearByPharmacy:
 
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
+                /*if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED
                         && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
@@ -116,7 +120,11 @@ public class UtilitiesActivity extends BaseActivity implements View.OnClickListe
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION}, STORAGE_PERMISSION_CODE);
                     }
-                }
+                }*/
+
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=near+by+pharmacis"));
+                intent.setPackage("com.google.android.apps.maps");
+                startActivity(intent);
 
                 return;
         }

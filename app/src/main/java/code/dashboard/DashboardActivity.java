@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -11,6 +13,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -140,10 +145,35 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
 
         if(!AppSettings.getString(AppSettings.targetWeight).isEmpty())
         {
-            tvTarget.setText(getString(R.string.goal_weight)+": "+AppSettings.getString(AppSettings.targetWeight)
+            Typeface font = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+
+            String str1 = getString(R.string.goal_weight)+": "+AppSettings.getString(AppSettings.targetWeight)
+                    +" "+AppSettings.getString(AppSettings.weightUnit)
+                    +"\nTarget Calories: ";
+
+            String str2 = str1+AppSettings.getString(AppSettings.targetCalories);
+
+            String str = getString(R.string.goal_weight)+": "+AppSettings.getString(AppSettings.targetWeight)
                     +" "+AppSettings.getString(AppSettings.weightUnit)
                     +"\nTarget Calories: "+AppSettings.getString(AppSettings.targetCalories)
-                    +"\nGoal Date: "+AppSettings.getString(AppSettings.targetDate));
+                    +"\nGoal Date: "+AppSettings.getString(AppSettings.targetDate);
+
+            if(AppSettings.getString(AppSettings.targetCalories).contains("-"))
+            {
+                SpannableString spannableString = new SpannableString(str);
+                ForegroundColorSpan foregroundSpan = new ForegroundColorSpan(Color.RED);
+                spannableString.setSpan(foregroundSpan,  str1.length(), str2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvTarget.setText(spannableString);
+            }
+            else
+            {
+                SpannableString spannableString = new SpannableString(str);
+                ForegroundColorSpan foregroundSpan = new ForegroundColorSpan(Color.GREEN);
+                spannableString.setSpan(foregroundSpan,  str1.length(), str2.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvTarget.setText(spannableString);
+            }
+
+            tvTarget.setTypeface(font);
         }
 
         tvCalculatedBMI.setText(AppUtils.calculateBMI(mActivity,
@@ -196,21 +226,9 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
 
                 closeDrawer();
 
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED
-                        && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    //TO do here if permission is granted by user
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=near+by+doctors"));
-                    intent.setPackage("com.google.android.apps.maps");
-                    startActivity(intent);
-
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION}, STORAGE_PERMISSION_CODE);
-                    }
-                }
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=near+by+doctors"));
+                intent.setPackage("com.google.android.apps.maps");
+                startActivity(intent);
 
                 return;
 
@@ -218,21 +236,9 @@ public class DashboardActivity extends BaseActivity implements View.OnClickListe
 
                 closeDrawer();
 
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED
-                        && ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                        == PackageManager.PERMISSION_GRANTED) {
-                    //TO do here if permission is granted by user
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=near+by+pharmacies"));
-                    intent.setPackage("com.google.android.apps.maps");
-                    startActivity(intent);
-
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION}, STORAGE_PERMISSION_CODE);
-                    }
-                }
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=near+by+pharmacies"));
+                intent.setPackage("com.google.android.apps.maps");
+                startActivity(intent);
 
                 return;
 
