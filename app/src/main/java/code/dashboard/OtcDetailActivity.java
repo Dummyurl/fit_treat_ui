@@ -71,7 +71,7 @@ public class OtcDetailActivity extends BaseActivity implements View.OnClickListe
 
                 HashMap<String, String> hashMap = new HashMap();
 
-                String str = jsonObject1.getString("Ingredients").replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"","").trim();
+                String str = jsonObject1.getString("ingredients").replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\"","").trim();
                 //AppConstants.separated = str.split(",");
 
                 /*str = "\u25CF "+str;
@@ -81,7 +81,7 @@ public class OtcDetailActivity extends BaseActivity implements View.OnClickListe
                 }*/
 
                 hashMap.put("medicine",str.trim());
-                hashMap.put("name",jsonObject1.getString("Name"));
+                hashMap.put("name",jsonObject1.getString("name"));
                 hashMap.put("id",jsonObject1.getString("_id"));
 
                 OtcMedicineList.add(hashMap);
