@@ -329,7 +329,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             json_data.put("weightUnit",  spinnerWeight.getSelectedItem());
             json_data.put("heightUnit",  spinnerHeight.getSelectedItem());
 
-            String time = Calendar.getInstance().getTimeZone().getDisplayName(false, TimeZone.SHORT);
+            int tzOffset = Calendar.getInstance().getTimeZone().getRawOffset();
+            //String time = Calendar.getInstance().getTimeZone().getDisplayName(false, TimeZone.SHORT);
+            String time = "\""+tzOffset+"\"";
             Log.d("time",time);
 
             json_data.put("timeZone", time);
