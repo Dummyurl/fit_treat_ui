@@ -4,11 +4,8 @@ import code.database.AppSettings;
 
 public class AppUrls {
 
-    //Demo URL
-    //public static final String baseUrl = "http://trendytoday.in/kmc_development/api/";
-
     //Live URL
-    public static final String baseUrl = "https://fittreat.cfapps.us10.hana.ondemand.com/";
+    public static final String baseUrl = "https://fit-treat-server.herokuapp.com/";
     public static final String login = baseUrl+"auth/login";
     public static final String register = baseUrl+"auth/register";
     public static final String logout = baseUrl+"Logout";
@@ -23,5 +20,6 @@ public class AppUrls {
     public static final String getAppData = baseUrl+"api/getAppData";
     public static final String sendMsgToAdmin = baseUrl+"api/sendMsgToAdmin";
     public static final String filterMeals = baseUrl+"api/filterMeals/";
+    public static final String forgotPassword = baseUrl+"api/changePassword/";
 
 }
