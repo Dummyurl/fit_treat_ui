@@ -1034,7 +1034,7 @@ public class AppUtils {
     public static String convertDate(String dateToConvert)
     {
         if(!dateToConvert.isEmpty()){
-            SimpleDateFormat spf=new SimpleDateFormat("yyyy/MM/DD");
+            SimpleDateFormat spf=new SimpleDateFormat("yyyy/MM/dd");
             Date newDate= null;
             try {
                 newDate = spf.parse(dateToConvert);

@@ -342,7 +342,7 @@ public class TargetActivity extends BaseActivity implements View.OnClickListener
         try {
             JSONObject jsonObject = new JSONObject(response);
 
-            AppUtils.showToastSort(mActivity, jsonObject.getString("status"));
+            // AppUtils.showToastSort(mActivity, jsonObject.getString("status"));
 
             //onBackPressed();
 
