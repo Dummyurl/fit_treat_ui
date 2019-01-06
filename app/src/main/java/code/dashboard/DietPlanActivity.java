@@ -367,7 +367,7 @@ public class DietPlanActivity extends BaseActivity implements View.OnClickListen
 
         } catch (JSONException e) {
             e.printStackTrace();
-            AppUtils.showToastSort(mActivity, response);
+            AppUtils.showToastSort(mActivity, "Some error occurred");
         }
 
         adapter = new Adapter(DietPlanList);

@@ -1033,17 +1033,18 @@ public class AppUtils {
 
     public static String convertDate(String dateToConvert)
     {
-        SimpleDateFormat spf=new SimpleDateFormat("yyyy/MM/DD");
-        Date newDate= null;
-        try {
-            newDate = spf.parse(dateToConvert);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        if(!dateToConvert.isEmpty()){
+            SimpleDateFormat spf=new SimpleDateFormat("yyyy/MM/DD");
+            Date newDate= null;
+            try {
+                newDate = spf.parse(dateToConvert);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            spf= new SimpleDateFormat("dd-MM-yyyy");
+            dateToConvert = spf.format(newDate);
+            System.out.println(dateToConvert);
         }
-        spf= new SimpleDateFormat("dd-MM-yyyy");
-        dateToConvert = spf.format(newDate);
-        System.out.println(dateToConvert);
-
         return  dateToConvert;
     }
 

@@ -331,7 +331,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             int tzOffset = Calendar.getInstance().getTimeZone().getRawOffset();
             //String time = Calendar.getInstance().getTimeZone().getDisplayName(false, TimeZone.SHORT);
-            String time = "\""+tzOffset+"\"";
+            String time = ""+tzOffset;
             Log.d("time",time);
 
             json_data.put("timeZone", time);

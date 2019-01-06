@@ -5,7 +5,8 @@ import code.database.AppSettings;
 public class AppUrls {
 
     //Live URL
-    public static final String baseUrl = "https://fittreat-server.herokuapp.com/";
+    //public static final String baseUrl = "https://fittreat-server.herokuapp.com/";
+    public static final String baseUrl = "https://fitpythonserver.herokuapp.com/";
     public static final String login = baseUrl+"auth/login";
     public static final String register = baseUrl+"auth/register";
     public static final String logout = baseUrl+"Logout";

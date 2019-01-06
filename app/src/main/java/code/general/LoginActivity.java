@@ -207,14 +207,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         AppUtils.hideDialog();
                         // handle error
                         if (error.getErrorCode() != 0) {
-                            AppUtils.showToastSort(mActivity,String.valueOf(error.getErrorCode()));
+                            //AppUtils.showToastSort(mActivity,String.valueOf(error.getErrorCode()));
                             Log.d("onError errorCode ", "onError errorCode : " + error.getErrorCode());
                             Log.d("onError errorBody", "onError errorBody : " + error.getErrorBody());
                             Log.d("onError errorDetail", "onError errorDetail : " + error.getErrorDetail());
 
-                            if( error.getErrorCode()==401&&error.getErrorBody().equals("Unauthorized"))
+                            if( error.getErrorCode()==401)
                             {
-                                AppUtils.showToastSort(mActivity, "Kindly check your login credentials");
+                                String errorString;
+                                try {
+                                    JSONObject obj = new JSONObject(error.getErrorBody());
+                                    errorString = obj.getString("error");
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    errorString = "Invalid Credentials";
+                                }
+                                AppUtils.showToastSort(mActivity, errorString);
                             }
 
                         } else {
