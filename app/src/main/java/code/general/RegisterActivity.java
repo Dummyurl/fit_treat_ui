@@ -141,6 +141,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         FoodList.add(getString(R.string.vegan));
         FoodList.add(getString(R.string.vegetarian));
         FoodList.add(getString(R.string.nonVegetarian));
+        FoodList.add("None");
 
         MedicalList.clear();
         MedicalList.add(getString(R.string.medical_condition));
