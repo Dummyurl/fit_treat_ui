@@ -226,6 +226,7 @@ public class MyProfileActivity extends BaseActivity implements View.OnClickListe
         FoodList.add(getString(R.string.vegan));
         FoodList.add(getString(R.string.vegetarian));
         FoodList.add(getString(R.string.nonVegetarian));
+        FoodList.add(getString(R.string.none));
 
         MedicalList.clear();
         MedicalList.add(getString(R.string.medical_condition));

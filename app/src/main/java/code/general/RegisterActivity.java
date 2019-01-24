@@ -141,7 +141,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         FoodList.add(getString(R.string.vegan));
         FoodList.add(getString(R.string.vegetarian));
         FoodList.add(getString(R.string.nonVegetarian));
-        FoodList.add("None");
+        FoodList.add(getString(R.string.none));
 
         MedicalList.clear();
         MedicalList.add(getString(R.string.medical_condition));
@@ -367,8 +367,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                             Log.d("onError errorBody", "onError errorBody : " + error.getErrorBody());
                             Log.d("onError errorDetail", "onError errorDetail : " + error.getErrorDetail());
 
-                            if( error.getErrorCode()==422)
-                            {
+                           /* if( error.getErrorCode()==422)
+                            {*/
                                 try {
                                     JSONObject jsonObject = new JSONObject(error.getErrorBody());
 
@@ -378,7 +378,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                                     e.printStackTrace();
                                 }
 
-                            }
+                           // }
 
                         } else {
                             AppUtils.showToastSort(mActivity, String.valueOf(error.getErrorDetail()));
