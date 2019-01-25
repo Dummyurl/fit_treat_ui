@@ -50,19 +50,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     LinearLayout llRegisterBottom;
 
     //Spinner
-    Spinner spinnerWeight,spinnerHeight,spinnerFood,spinnerMedical;
+    Spinner spinnerWeight, spinnerHeight, spinnerFood, spinnerMedical;
 
     //ArrayList
-    private  static ArrayList<String> WeightList = new ArrayList<String>();
-    private  static ArrayList<String> HeightList = new ArrayList<String>();
-    private  static ArrayList<String> FoodList = new ArrayList<String>();
-    private  static ArrayList<String> MedicalList = new ArrayList<String>();
+    private static ArrayList<String> WeightList = new ArrayList<String>();
+    private static ArrayList<String> HeightList = new ArrayList<String>();
+    private static ArrayList<String> FoodList = new ArrayList<String>();
+    private static ArrayList<String> MedicalList = new ArrayList<String>();
 
     //EditText
-    EditText etFirstName,etLastName,etEmail,etPassword,etDob,etHeight,etWeight;
+    EditText etFirstName, etLastName, etEmail, etPassword, etDob, etHeight, etWeight;
 
     //RadioButton
-    RadioButton rbMale,rbFemale;
+    RadioButton rbMale, rbFemale;
 
     //ImageView
     ImageView ivDob;
@@ -70,7 +70,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     //TextView
     TextView tvSubmit;
 
-    String gender="";
+    String gender = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +83,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private void findViewById() {
 
         //Spinner
-        spinnerWeight= findViewById(R.id.spinnerWeight);
-        spinnerHeight= findViewById(R.id.spinnerHeight);
-        spinnerFood= findViewById(R.id.spinnerFood);
-        spinnerMedical= findViewById(R.id.spinnerMedical);
+        spinnerWeight = findViewById(R.id.spinnerWeight);
+        spinnerHeight = findViewById(R.id.spinnerHeight);
+        spinnerFood = findViewById(R.id.spinnerFood);
+        spinnerMedical = findViewById(R.id.spinnerMedical);
 
         //RelativeLayout
         rlLogo = findViewById(R.id.rlLogo);
@@ -95,37 +95,37 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         llRegisterBottom = findViewById(R.id.llRegisterBottom);
 
         //All Edittext
-        etFirstName= findViewById(R.id.etFirstName);
-        etLastName= findViewById(R.id.etLastName);
-        etEmail= findViewById(R.id.etEmail);
-        etPassword= findViewById(R.id.etPassword);
-        etDob= findViewById(R.id.etDob);
-        etHeight= findViewById(R.id.etHeight);
-        etWeight= findViewById(R.id.etWeight);
+        etFirstName = findViewById(R.id.etFirstName);
+        etLastName = findViewById(R.id.etLastName);
+        etEmail = findViewById(R.id.etEmail);
+        etPassword = findViewById(R.id.etPassword);
+        etDob = findViewById(R.id.etDob);
+        etHeight = findViewById(R.id.etHeight);
+        etWeight = findViewById(R.id.etWeight);
 
         //Radio Buttons for Male and Female
-        rbMale= findViewById(R.id.rbMale);
-        rbFemale= findViewById(R.id.rbFemale);
+        rbMale = findViewById(R.id.rbMale);
+        rbFemale = findViewById(R.id.rbFemale);
 
         //TextView
-        tvSubmit= findViewById(R.id.tvSubmit);
+        tvSubmit = findViewById(R.id.tvSubmit);
 
         //ImageView for Calendar
-        ivDob= findViewById(R.id.ivDob);
+        ivDob = findViewById(R.id.ivDob);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 upViewAnimation();
             }
-        },600);
+        }, 600);
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 llRegisterBottom.setVisibility(View.VISIBLE);
             }
-        },1600);
+        }, 1600);
 
         WeightList.clear();
         WeightList.add(getString(R.string.kg));
@@ -165,9 +165,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked)
-                {
-                    gender=getString(R.string.male);
+                if (isChecked) {
+                    gender = getString(R.string.male);
                     rbMale.setChecked(true);
                     rbFemale.setChecked(false);
                 }
@@ -179,9 +178,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked)
-                {
-                    gender=getString(R.string.female);
+                if (isChecked) {
+                    gender = getString(R.string.female);
                     rbMale.setChecked(false);
                     rbFemale.setChecked(true);
                 }
@@ -209,43 +207,49 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             case R.id.tvSubmit:
 
-                if(etFirstName.getText().toString().trim().isEmpty())
-                {
+
+                if (etFirstName.getText().toString().trim().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorFName));
-                }
-                else  if(!AppUtils.isValidEmail(etEmail.getText().toString()))
-                {
+                } else if (!AppUtils.isValidEmail(etEmail.getText().toString())) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorEmail));
-                }
-                else  if(etPassword.getText().toString().isEmpty())
-                {
+                } else if (etPassword.getText().toString().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorPassword));
-                }
-                else if(gender.isEmpty())
-                {
+                } else if (gender.isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorGender));
-                }
-                else if(etDob.getText().toString().isEmpty())
-                {
+                } else if (etDob.getText().toString().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorDob));
-                }
-                else if(etHeight.getText().toString().isEmpty())
-                {
+                } else if (etHeight.getText().toString().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorHeight));
-                }
-                else if(etWeight.getText().toString().isEmpty())
-                {
+                } else if (etWeight.getText().toString().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorWeight));
-                }
-                else if(spinnerFood.getSelectedItemPosition()==0)
-                {
+                } else if (spinnerFood.getSelectedItemPosition() == 0) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorFood));
-                }
-                else if(spinnerMedical.getSelectedItemPosition()==0)
-                {
+                } else if (spinnerMedical.getSelectedItemPosition() == 0) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorMedical));
-                }
-                else if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
+                } else if (!etHeight.getText().toString().isEmpty() && !etWeight.getText().toString().isEmpty()) {
+                    // Logic to handle invalid weight and height values - zeroes and
+                    String weight = etWeight.getText().toString();
+                    String[] wSplit = weight.split("\\.");
+                    if (wSplit.length > 1) {
+                        AppUtils.showToastSort(mActivity, "Weight Error: Decimal values not allowed");
+                    } else if (Integer.parseInt(weight) == 0) {
+                        AppUtils.showToastSort(mActivity, "Weight can not be zero");
+                    }
+                    String height = etHeight.getText().toString();
+                    String[] hSplit = height.split("\\.");
+                    if (hSplit.length > 1) {
+                        if (spinnerHeight.getSelectedItem().toString().equals("cm")) {
+                            AppUtils.showToastSort(mActivity, "Invalid Height");
+                        }
+                        if (hSplit[0].isEmpty() || Integer.parseInt(hSplit[0]) == 0) {
+                            AppUtils.showToastSort(mActivity, getString(R.string.invalidHeight));
+                        } else if (spinnerHeight.getSelectedItem().toString().equals("ft") && Integer.parseInt(hSplit[1]) > 9) {
+                            AppUtils.showToastSort(mActivity, getString(R.string.invalidHeight));
+                        }
+                    } else if (Integer.parseInt(hSplit[0]) == 0) {
+                        AppUtils.showToastSort(mActivity, "Height can not be zero");
+                    }
+                } else if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
                     userRegistrationApi();
                 } else {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
@@ -255,7 +259,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             case R.id.ivDob:
 
-                AppUtils.dateDialog(mActivity,etDob,1);
+                AppUtils.dateDialog(mActivity, etDob, 1);
 
                 return;
 
@@ -268,7 +272,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         ArrayList<String> data;
 
-        public adapterSpinner(Context context, int textViewResourceId, ArrayList <String> arraySpinner_time) {
+        public adapterSpinner(Context context, int textViewResourceId, ArrayList<String> arraySpinner_time) {
 
             super(context, textViewResourceId, arraySpinner_time);
 
@@ -277,7 +281,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
 
         @Override
-        public View getDropDownView(int position, View convertView,ViewGroup parent) {
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
             return getCustomView(position, convertView, parent);
         }
 
@@ -288,8 +292,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         public View getCustomView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View row=inflater.inflate(R.layout.spinner_adapter, parent, false);
-            TextView label=(TextView)row.findViewById(R.id.tv_spinner_name);
+            View row = inflater.inflate(R.layout.spinner_adapter, parent, false);
+            TextView label = (TextView) row.findViewById(R.id.tv_spinner_name);
 
             label.setText(data.get(position).toString());
 
@@ -299,7 +303,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.
                 INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         return true;
@@ -320,20 +324,20 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             json_data.put("firstName", etFirstName.getText().toString().trim());
             json_data.put("lastName", etLastName.getText().toString().trim());
             json_data.put("email", etEmail.getText().toString().trim());
-            json_data.put("password",  etPassword.getText().toString().trim());
-            json_data.put("dateOfBirth",  etDob.getText().toString().trim());
-            json_data.put("weight",  etWeight.getText().toString().trim());
-            json_data.put("height",  etHeight.getText().toString().trim());
-            json_data.put("foodPreference",  spinnerFood.getSelectedItem());
-            json_data.put("medicalCondition",  spinnerMedical.getSelectedItem());
-            json_data.put("gender",  gender);
-            json_data.put("weightUnit",  spinnerWeight.getSelectedItem());
-            json_data.put("heightUnit",  spinnerHeight.getSelectedItem());
+            json_data.put("password", etPassword.getText().toString().trim());
+            json_data.put("dateOfBirth", etDob.getText().toString().trim());
+            json_data.put("weight", etWeight.getText().toString().trim());
+            json_data.put("height", etHeight.getText().toString().trim());
+            json_data.put("foodPreference", spinnerFood.getSelectedItem());
+            json_data.put("medicalCondition", spinnerMedical.getSelectedItem());
+            json_data.put("gender", gender);
+            json_data.put("weightUnit", spinnerWeight.getSelectedItem());
+            json_data.put("heightUnit", spinnerHeight.getSelectedItem());
 
             int tzOffset = Calendar.getInstance().getTimeZone().getRawOffset();
             //String time = Calendar.getInstance().getTimeZone().getDisplayName(false, TimeZone.SHORT);
-            String time = ""+tzOffset;
-            Log.d("time",time);
+            String time = "" + tzOffset;
+            Log.d("time", time);
 
             json_data.put("timeZone", time);
 
@@ -346,7 +350,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         AndroidNetworking.post(url)
                 .addJSONObjectBody(json_data)
-                .addHeaders("Content-Type","application/json")
+                .addHeaders("Content-Type", "application/json")
                 //.setContentType("application/json; charset=utf-8")
                 .setPriority(Priority.HIGH)
                 .setTag("userRegistrationApi")
@@ -362,23 +366,23 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                         AppUtils.hideDialog();
                         // handle error
                         if (error.getErrorCode() != 0) {
-                            AppUtils.showToastSort(mActivity,String.valueOf(error.getErrorCode()));
+                            AppUtils.showToastSort(mActivity, String.valueOf(error.getErrorCode()));
                             Log.d("onError errorCode ", "onError errorCode : " + error.getErrorCode());
                             Log.d("onError errorBody", "onError errorBody : " + error.getErrorBody());
                             Log.d("onError errorDetail", "onError errorDetail : " + error.getErrorDetail());
 
                            /* if( error.getErrorCode()==422)
                             {*/
-                                try {
-                                    JSONObject jsonObject = new JSONObject(error.getErrorBody());
+                            try {
+                                JSONObject jsonObject = new JSONObject(error.getErrorBody());
 
-                                    AppUtils.showToastSort(mActivity, jsonObject.getString("error"));
+                                AppUtils.showToastSort(mActivity, jsonObject.getString("error"));
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
-                           // }
+                            // }
 
                         } else {
                             AppUtils.showToastSort(mActivity, String.valueOf(error.getErrorDetail()));
@@ -387,7 +391,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 });
     }
 
-    private void parseJSON(String response){
+    private void parseJSON(String response) {
 
         AppUtils.hideDialog();
 
@@ -396,31 +400,28 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         try {
             JSONObject jsonObject = new JSONObject(response);
 
-            if(jsonObject.has("error"))
-            {
+            if (jsonObject.has("error")) {
                 AppUtils.showToastSort(mActivity, jsonObject.getString("error"));
-            }
-            else
-            {
-                AppSettings.putString(AppSettings.firstName,jsonObject.getString("firstName"));
-                AppSettings.putString(AppSettings.lastName,jsonObject.getString("lastName"));
-                AppSettings.putString(AppSettings.email,jsonObject.getString("email"));
-                AppSettings.putString(AppSettings.dateOfBirth,jsonObject.getString("dateOfBirth"));
-                AppSettings.putString(AppSettings.weight,jsonObject.getString("weight"));
-                AppSettings.putString(AppSettings.height,jsonObject.getString("height"));
-                AppSettings.putString(AppSettings.medicalCondition,jsonObject.getString("medicalCondition"));
-                AppSettings.putString(AppSettings.foodPreference,jsonObject.getString("foodPreference"));
-                AppSettings.putString(AppSettings.userPhoto,"");
-                AppSettings.putString(AppSettings.targetWeight,"");
-                AppSettings.putString(AppSettings.targetDate,"");
-                AppSettings.putString(AppSettings.targetCalories,"");
-                AppSettings.putString(AppSettings.bmi,"0.0");
-                AppSettings.putString(AppSettings.role,jsonObject.getString("role"));
-                AppSettings.putString(AppSettings.userId,jsonObject.getString("_id"));
-                AppSettings.putString(AppSettings.age,jsonObject.getString("age"));
-                AppSettings.putString(AppSettings.gender,jsonObject.getString("gender"));
-                AppSettings.putString(AppSettings.heightUnit,jsonObject.getString("heightUnit"));
-                AppSettings.putString(AppSettings.weightUnit,jsonObject.getString("weightUnit"));
+            } else {
+                AppSettings.putString(AppSettings.firstName, jsonObject.getString("firstName"));
+                AppSettings.putString(AppSettings.lastName, jsonObject.getString("lastName"));
+                AppSettings.putString(AppSettings.email, jsonObject.getString("email"));
+                AppSettings.putString(AppSettings.dateOfBirth, jsonObject.getString("dateOfBirth"));
+                AppSettings.putString(AppSettings.weight, jsonObject.getString("weight"));
+                AppSettings.putString(AppSettings.height, jsonObject.getString("height"));
+                AppSettings.putString(AppSettings.medicalCondition, jsonObject.getString("medicalCondition"));
+                AppSettings.putString(AppSettings.foodPreference, jsonObject.getString("foodPreference"));
+                AppSettings.putString(AppSettings.userPhoto, "");
+                AppSettings.putString(AppSettings.targetWeight, "");
+                AppSettings.putString(AppSettings.targetDate, "");
+                AppSettings.putString(AppSettings.targetCalories, "");
+                AppSettings.putString(AppSettings.bmi, "0.0");
+                AppSettings.putString(AppSettings.role, jsonObject.getString("role"));
+                AppSettings.putString(AppSettings.userId, jsonObject.getString("_id"));
+                AppSettings.putString(AppSettings.age, jsonObject.getString("age"));
+                AppSettings.putString(AppSettings.gender, jsonObject.getString("gender"));
+                AppSettings.putString(AppSettings.heightUnit, jsonObject.getString("heightUnit"));
+                AppSettings.putString(AppSettings.weightUnit, jsonObject.getString("weightUnit"));
 
                 startActivity(new Intent(mActivity, DashboardActivity.class));
                 finishAffinity();
@@ -442,7 +443,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             float x = ev.getRawX() + view.getLeft() - scrcoords[0];
             float y = ev.getRawY() + view.getTop() - scrcoords[1];
             if (x < view.getLeft() || x > view.getRight() || y < view.getTop() || y > view.getBottom())
-                ((InputMethodManager)this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
+                ((InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow((this.getWindow().getDecorView().getApplicationWindowToken()), 0);
         }
         return super.dispatchTouchEvent(ev);
     }

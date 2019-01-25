@@ -63,6 +63,7 @@
     <string name="errorFood">Select Food Preference</string>
     <string name="errorMedical">Select Medical Condition</string>
     <string name="time_period">Time Period</string>
+    <string name="invalidHeight">Invalid Height Value</string>
 
     <string name="kg">kg</string>
     <string name="lb">lb</string>
