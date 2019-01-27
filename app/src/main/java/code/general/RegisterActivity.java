@@ -207,56 +207,73 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
             case R.id.tvSubmit:
 
-
+                boolean retFlag = false;
                 if (etFirstName.getText().toString().trim().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorFName));
+                    retFlag = true;
                 } else if (!AppUtils.isValidEmail(etEmail.getText().toString())) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorEmail));
+                    retFlag = true;
                 } else if (etPassword.getText().toString().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorPassword));
+                    retFlag = true;
                 } else if (gender.isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorGender));
+                    retFlag = true;
                 } else if (etDob.getText().toString().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorDob));
+                    retFlag = true;
                 } else if (etHeight.getText().toString().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorHeight));
+                    retFlag = true;
                 } else if (etWeight.getText().toString().isEmpty()) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorWeight));
+                    retFlag = true;
                 } else if (spinnerFood.getSelectedItemPosition() == 0) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorFood));
+                    retFlag = true;
                 } else if (spinnerMedical.getSelectedItemPosition() == 0) {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorMedical));
-                } else if (!etHeight.getText().toString().isEmpty() && !etWeight.getText().toString().isEmpty()) {
+                    retFlag = true;
+                }
+                if (!etHeight.getText().toString().isEmpty() && !etWeight.getText().toString().isEmpty()) {
                     // Logic to handle invalid weight and height values - zeroes and
                     String weight = etWeight.getText().toString();
                     String[] wSplit = weight.split("\\.");
                     if (wSplit.length > 1) {
                         AppUtils.showToastSort(mActivity, "Weight Error: Decimal values not allowed");
+                        retFlag = true;
                     } else if (Integer.parseInt(weight) == 0) {
                         AppUtils.showToastSort(mActivity, "Weight can not be zero");
+                        retFlag = true;
                     }
                     String height = etHeight.getText().toString();
                     String[] hSplit = height.split("\\.");
                     if (hSplit.length > 1) {
                         if (spinnerHeight.getSelectedItem().toString().equals("cm")) {
                             AppUtils.showToastSort(mActivity, "Invalid Height");
+                            retFlag = true;
                         }
                         if (hSplit[0].isEmpty() || Integer.parseInt(hSplit[0]) == 0) {
                             AppUtils.showToastSort(mActivity, getString(R.string.invalidHeight));
+                            retFlag = true;
                         } else if (spinnerHeight.getSelectedItem().toString().equals("ft") && Integer.parseInt(hSplit[1]) > 9) {
                             AppUtils.showToastSort(mActivity, getString(R.string.invalidHeight));
+                            retFlag = true;
                         }
                     } else if (Integer.parseInt(hSplit[0]) == 0) {
                         AppUtils.showToastSort(mActivity, "Height can not be zero");
+                        retFlag = true;
                     }
+                }
+                if(retFlag){
+                    return;
                 } else if (SimpleHTTPConnection.isNetworkAvailable(mActivity)) {
                     userRegistrationApi();
                 } else {
                     AppUtils.showToastSort(mActivity, getString(R.string.errorInternet));
+                    return;
                 }
-
-                return;
-
             case R.id.ivDob:
 
                 AppUtils.dateDialog(mActivity, etDob, 1);
