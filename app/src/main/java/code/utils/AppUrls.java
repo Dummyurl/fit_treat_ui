@@ -2,6 +2,12 @@ package code.utils;
 
 import code.database.AppSettings;
 
+/*
+ *
+ * API/Service endpoints being used in the application to communicate with the Server and the DB
+ *
+ * */
+
 public class AppUrls {
 
     //Live URL

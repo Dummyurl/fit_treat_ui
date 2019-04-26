@@ -161,7 +161,12 @@ public class AppUtils {
         return -1;
     }
 
+    /*
+     *   Method to check Email ID format at the time of login
+     *
+     * */
     public static boolean isValidEmail(String email) {
+
         String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -170,6 +175,10 @@ public class AppUtils {
         return matcher.matches();
     }
 
+    /*
+     *   Method to check Phone number format
+     *
+     * */
     public static boolean isValidPhone(String pass) {
         return pass != null && pass.length() == 10;
     }
@@ -228,6 +237,10 @@ public class AppUtils {
         }
     }
 
+    /*
+     *   Method to convert Java Date object to user readable Date format (yyyy-MM-dd)
+     *
+     * */
     public static String getTncDate() {
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
@@ -347,6 +360,12 @@ public class AppUtils {
         return Settings.Secure.getString(ctx.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 
+
+    /*
+     * Method to get timezone of the user
+     * Used to reset meals as per user's timezone
+     *
+     * */
     public static String getDateCurrentTimeZone(long timestamp) {
 
         DateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy, hh:mm aa");
@@ -362,6 +381,10 @@ public class AppUtils {
         return ret;
     }
 
+
+    /*
+     * Used to convert the timestamp being fetched from DB to user readable Date format
+     * */
     public static String getDateFromTimestamp(long timestamp) {
 
         DateFormat formatter = new SimpleDateFormat("dd MMM hh:mm");
@@ -377,6 +400,10 @@ public class AppUtils {
         return ret;
     }
 
+
+    /*
+     * Method to get current date
+     * */
     public static String getCurrentDate() {
 
         Date c = Calendar.getInstance().getTime();
@@ -546,6 +573,10 @@ public class AppUtils {
         return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
+    /*
+     *   Method to calculate age from the entered Date of Birth
+     *
+     * */
     public static int getAgeFromDOB(String dobDate) {
 
         int age = 0;
@@ -826,6 +857,10 @@ public class AppUtils {
         return sdf.format(date);
     }
 
+    /*
+     * Method to convert weight in pounds
+     * */
+
     public static double covertWeight(Context context,double weight,String weigthType)
     {
         if(weigthType.equals(context.getString(R.string.lb)))
@@ -837,7 +872,10 @@ public class AppUtils {
         return weight;
     }
 
-
+    /*
+     * Context - Target Weight
+     * Method to get number of weeks out of number of days entered
+     * */
     public static double covertWeeks(Context context,double weeks,String weeksType)
     {
         if(weeksType.equals(context.getString(R.string.days)))
@@ -852,10 +890,12 @@ public class AppUtils {
         return weeks;
     }
 
-    public static String covertDays(Context context,double weeks,String weeksType)
-    {
-        if(weeksType.equals(context.getString(R.string.weeks)))
-        {
+    /*
+     * Context - Target Weight
+     * Method to get total number of days out of number of weeks entered
+     * */
+    public static String covertDays(Context context, double weeks, String weeksType) {
+        if(weeksType.equals(context.getString(R.string.weeks))) {
             weeks = weeks * 7;
 
             DecimalFormat f = new DecimalFormat("##.00");
@@ -872,15 +912,16 @@ public class AppUtils {
 
     }
 
-    public static double covertHeightinCM(Context context,double height,String heightType)
-    {
-        if(heightType.equals(context.getString(R.string.ft)))
-        {
+    /*
+     * Context - BMI Calculation
+     * Method to convert height to centimeters
+     * */
+    public static double covertHeightinCM(Context context, double height, String heightType) {
+        if(heightType.equals(context.getString(R.string.ft))) {
             height = height * 30.48;
         }
 
-        if(heightType.equals(context.getString(R.string.m)))
-        {
+        if(heightType.equals(context.getString(R.string.m))) {
             height = height * 100;
         }
 
@@ -888,7 +929,10 @@ public class AppUtils {
         return height;
     }
 
-
+    /*
+     * Context - BMI Calculation
+     * Method to convert height to metres
+     * */
     public static double covertHeightinM(Context context,double height,String heightType)
     {
         if(heightType.equals(context.getString(R.string.ft)))
@@ -905,7 +949,12 @@ public class AppUtils {
         return height;
     }
 
-
+    /*
+     * Method to calculate Basal Metabolic Rate
+     *
+     * Male => BMR = 66.47 + (13.75 * weight in kg) + (5.003 * height in cm) - (6.755 * age in years)
+     * Female => BMR = 655.1 + (9.563 * weight in kg) + (1.85 * height in cm) - (4.676 * age in years)
+     * */
     public static double calculateBMR(Context context,
                                       double height,
                                       String heightType,
@@ -932,7 +981,24 @@ public class AppUtils {
         return bmr;
     }
 
+    /*
+    * Method to calculate calories required to sustain weight,gain weight, reduce weight
+    * Calories to sustain weight = Basal Metabolic Rate * Activity Level
 
+        Aim – Lose Weight
+        Calories required to lose weight
+
+        Calories for losing weight = (weight in kg - target weight in kg) * (1100 / goal date in weeks)
+        Required calories to achieve the target weight = calories to sustain weight - calories for losing weight
+
+        •	Aim – Gain Weight
+        For a weight gain of 2.2 pounds or one kilogram in a week one will need 1100 calories.
+
+        Calories for gaining weight = (target weight in kg - weight in kg) * (1100 / goal date in weeks)
+        Required calories to achieve the target weight = calories to sustain weight + calories for gaining weight
+
+    *
+    * */
     public static double calculateCalories(Context context,
                                            double height,
                                            String heightType,
@@ -944,8 +1010,7 @@ public class AppUtils {
                                            String tarWeiType,
                                            double weeks,
                                            String weeksType,
-                                           String active)
-    {
+                                           String active) {
 
         double bmr = calculateBMR(context,height,heightType,gender,age,weight,weigthType);
         Log.d("CaculationBMR", String.valueOf(bmr));
@@ -956,8 +1021,7 @@ public class AppUtils {
 
         double calRequired = 0;
 
-        if(targetWeight<weight)
-        {
+        if(targetWeight<weight) {
             //Aim – Gain Weight
 
             //Calories for losing weight = (weight in kg - target weight in kg) * (1100 / goal date in weeks)
@@ -969,9 +1033,7 @@ public class AppUtils {
             Log.d("CaculationLosingWeight", String.valueOf(calForLosingWeight));
 
             calRequired = calToSustainWeight - calForLosingWeight;
-        }
-        else  if(targetWeight>weight)
-        {
+        } else  if(targetWeight>weight) {
             //Aim – Lose Weight
 
             //Calories for gaining weight = (target weight in kg - weight in kg) * (1100 / goal date in weeks)
@@ -1017,7 +1079,11 @@ public class AppUtils {
         return activeLevel;
     }
 
-
+    /*
+     * Method to calculate BMI
+     *
+     * BMI = (weight in kilograms) / (height in meters)^2
+     * */
     public static String calculateBMI(Context context,double height,String heightType,double weight,String weigthType)
     {
         double bmi = covertWeight(context,weight,weigthType)
